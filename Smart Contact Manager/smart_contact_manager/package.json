@@ -1,0 +1,13 @@
+{
+  "name": "smart_contact_manager",
+    "version": "1.0.0",
+  "description": "A Spring Boot project with Tailwind CSS",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./src/main/resources/static/css/styles.css -o ./src/main/resources/static/css/output.css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.6"
+  }
+}
+
