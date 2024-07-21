@@ -1,0 +1,17 @@
+{
+  "name": "smart-contact-manager",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build:css": "npx tailwindcss -i src/main/resources/static/css/input.css -o src/main/resources/static/css/output.css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.6"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.19",
+    "flowbite": "^2.4.1",
+    "postcss": "^8.4.39"
+  }
+}
