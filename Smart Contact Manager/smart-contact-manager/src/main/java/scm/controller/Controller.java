@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ch.qos.logback.core.model.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -20,7 +19,7 @@ public class Controller {
     //Create a new user in web
     @GetMapping("/signup")
     public String userSignup(Model model){
-        return "get-started";
+        return "signup";
     }
 
 @GetMapping("/login")
@@ -29,17 +28,17 @@ public String login() {
 }
 
 
-    @GetMapping("about")
+    @GetMapping("/about")
     public String about() {
         return new String("about");
     }
 
-    @GetMapping("contact")
+    @GetMapping("/contact")
     public String contact() {
         return new String("contact-us");
     }
 
-    @GetMapping("feedback")
+    @GetMapping("/feedback")
     public String feedbackForm() {
         return new String("feedback-form");
     }
@@ -47,7 +46,7 @@ public String login() {
 
     // ----------------- AUTHORIZATION -------------------------------------
     //-------------Check Login-----------------------
-    @GetMapping("checklogin")
+    @GetMapping("/checklogin")
     public String checkLogin(@RequestBody String entity) {
         //TODO: process POST request
         
@@ -55,7 +54,7 @@ public String login() {
     }
     
     //-------------------- CREATE NEW USER------------------
-    @PostMapping("newuser")
+    @PostMapping("/newuser")
     public String newUser(@RequestBody String entity, String string) {
         //TODO: process POST request
         
