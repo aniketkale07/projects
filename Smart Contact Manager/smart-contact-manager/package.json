@@ -12,6 +12,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.19",
     "flowbite": "^2.4.1",
-    "postcss": "^8.4.39"
+    "postcss": "^8.4.39",
+    "smart-contact-manager": "file:"
   }
 }

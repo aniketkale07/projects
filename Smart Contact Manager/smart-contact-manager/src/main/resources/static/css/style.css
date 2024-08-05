@@ -1,0 +1,6 @@
+.custom-bg {
+    background-image: url('https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg?w=740&t=st=1722734759~exp=1722735359~hmac=a9b312db2f12de0a709814e481fa4f8e9935c80640ffd09c401a96c19ebf1884'); /* Replace this URL with the URL of your image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
