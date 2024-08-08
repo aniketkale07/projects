@@ -1,22 +1,191 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base-template::parent(~{::#content},~{::title},~{::script})}" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>Login</title>
-</head>
-<body>
-  <section id="content">
+<html lang="en" th:replace="~{base-template::parent(~{::#content},~{::title},~{::script})}"
+  xmlns:th="http://www.thymeleaf.org">
 
-    
-    <h2>This is login</h2>
+<head>
+  <title>About Us</title>
+  <!-- Tailwind CSS CDN -->
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
+
+  <section id="content" class="container mt-20 mx-auto py-2">
+    <div class="  text-center">
+      <h1 class="text-4xl font-bold mb-4">About Us</h1>
+      <p class="text-xl mb-6">Welcome to Contact Manager, your ultimate solution for managing contacts effortlessly.</p>
+      <div class="flex justify-center"> <img src="/images/founder.png" alt="about us images" class=" rounded-lg ">
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+      <!-- Our Mission -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md py-2">
+        <h2 class="text-2xl font-bold mb-4 text-center">Our Mission</h2>
+        <p class="text-lg">At Contact Manager, our mission is to simplify the way you manage your contacts. We
+          understand that keeping track of important connections can be challenging, so we've created a user-friendly
+          platform that makes it easy for you to store, organize, and access your contacts anytime, anywhere.</p>
+      </div>
+
+      <!-- Our Features -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mt-5 py-2">
+        <h2 class="text-2xl font-bold mb-6 text-center border-b-2">Our Features</h2>
+        <ul class="list-disc list-inside">
+          <li class="text-lg">Easy contact management with a simple and intuitive interface</li>
+          <li class="text-lg">Secure storage for all your contact information</li>
+          <li class="text-lg">Advanced search and filter options to quickly find contacts</li>
+          <li class="text-lg">Seamless synchronization across multiple devices</li>
+          <li class="text-lg">Customizable categories and tags for better organization</li>
+          <li class="text-lg">Data import and export options for flexibility</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mt-6">
+      <!-- Our Team -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-7 py-2">
+        <h2 class="text-2xl font-bold mb-4 text-center">Our Team</h2>
+        <p class="text-lg">We are a team of dedicated professionals passionate about technology and innovation. Our goal
+          is to provide you with the best tools to manage your contacts efficiently, allowing you to focus on what truly
+          matters – building and maintaining valuable relationships.</p>
+
+        <!-- Profile Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 py-4 px-3">
+          <!-- Profile 1 -->
+          <div
+            class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col items-center pb-10">
+              <img class="w-24 h-24 mb-3 mt-2 rounded-full shadow-lg" src="/images/insp.JPG" alt="Inspiration" />
+              <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Learn Code With Durgesh</h5>
+              <span class="text-sm text-gray-500 dark:text-gray-400">Inspiration</span>
+              <div class="flex mt-4">
+                <a href="#"
+                  class="py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Message</a>
+              </div>
+            </div>
+          </div>
+          <!-- Profile 2 -->
+          <div
+            class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col items-center pb-10">
+              <img class="w-24 h-24 mb-3 mt-2 rounded-full shadow-lg" src="/images/founder.png" alt="Founder" />
+              <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Aniket Kale</h5>
+              <span class="text-sm text-gray-500 dark:text-gray-400">Founder</span>
+              <div class="flex mt-4">
+                <a href="#"
+                  class="py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none outline-rose-600 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">About</a>
+              </div>
+            </div>
+          </div>
+          <!-- Profile 3 -->
+          <div
+            class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col items-center pb-10">
+              <img class="w-24 h-24 mb-3 mt-2 rounded-full shadow-lg" src="/images/cofounder.jpg" alt="Co-Founder" />
+              <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Arohi Deshmukh</h5>
+              <span class="text-sm text-gray-500 dark:text-gray-400">Co-Founder</span>
+              <div class="flex mt-4">
+                <a href="#"
+                  class="py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Message</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2nd Row ------------------------------  -->
+          <div
+            class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col items-center pb-10">
+              <img class="w-24 h-24 mb-3 mt-2 rounded-full shadow-lg" src="/images/cofounder.jpg" alt="Co-Founder" />
+              <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Arohi Deshmukh</h5>
+              <span class="text-sm text-gray-500 dark:text-gray-400">Co-Founder</span>
+              <div class="flex mt-4">
+                <a href="#"
+                  class="py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Message</a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col items-center pb-10">
+              <img class="w-24 h-24 mb-3 mt-2 rounded-full shadow-lg" src="/images/cofounder.jpg" alt="Co-Founder" />
+              <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Arohi Deshmukh</h5>
+              <span class="text-sm text-gray-500 dark:text-gray-400">Co-Founder</span>
+              <div class="flex mt-4">
+                <a href="#"
+                  class="py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Message</a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col items-center pb-10">
+              <img class="w-24 h-24 mb-3 mt-2 rounded-full shadow-lg" src="/images/cofounder.jpg" alt="Co-Founder" />
+              <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Arohi Deshmukh</h5>
+              <span class="text-sm text-gray-500 dark:text-gray-400">Co-Founder</span>
+              <div class="flex mt-4">
+                <a href="#"
+                  class="py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Message</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Why Choose Us -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md py-2">
+        <h2 class="text-2xl font-bold mb-4 text-center mt-9">Why Choose Us?</h2>
+        <p class="text-lg">Choosing Contact Manager means choosing a reliable and secure platform designed with your
+          needs in mind. We prioritize user experience and data security, ensuring that your contacts are always safe
+          and accessible. Join our community of satisfied users and experience the convenience of seamless contact
+          management today.</p>
+        <div class="grid grid-cols-3 gap-5 md:grid-cols-3 sm:grid-cols-1">
+
+          <div class="border-dashed grid grid-cols-1 shadow-lg border ">
+            <div class="rounded-md border mt-3 ">
+              <img src="/images/founder.png" alt="" srcset="" class=" h-44 w-44 rounded-full">
+            </div>
+            <div>
+              <h3 class="text-center text-xl">First Column</h3>
+            </div>
+            <div class="text-sm">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit fugit adipisci perspiciatis iste
+                obcaecati doloremque autem, suscipit veniam nobis voluptatem voluptates, voluptatum illum minima rem
+                officiis. Amet alias aspernatur aperiam?</p>
+            </div>
+          </div>
+          <div class="border-dashed shadow-lg border ">
+            <div class="rounded-md border mt-3 ">
+              <img src="/images/founder.png" alt="" srcset="" class=" h-44 w-44 rounded-full">
+            </div>
+            <div>
+              <h3 class="text-center text-xl">First Column</h3>
+            </div>
+            <div class="text-sm">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit fugit adipisci perspiciatis iste
+                obcaecati doloremque autem, suscipit veniam nobis voluptatem voluptates, voluptatum illum minima rem
+                officiis. Amet alias aspernatur aperiam?</p>
+            </div>
+          </div>
+          <div class="border-dashed shadow-lg border ">
+            <div class="rounded-md border mt-3 ">
+              <img src="/images/founder.png" alt="" srcset="" class=" h-44 w-44 rounded-full">
+            </div>
+            <div>
+              <h3 class="text-center text-xl">First Column</h3>
+            </div>
+            <div class="text-sm">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit fugit adipisci perspiciatis iste
+                obcaecati doloremque autem, suscipit veniam nobis voluptatem voluptates, voluptatum illum minima rem
+                officiis. Amet alias aspernatur aperiam?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-
-    <script>
-      console.log("this is scripting")
-    </script>
-  </div>
 </body>
+
 </html>
-
-
-

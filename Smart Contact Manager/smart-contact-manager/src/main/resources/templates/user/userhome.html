@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-th-replace="~{base-template :: parent(~{:: #content}, ~{::title}, ~{script})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Home </title>
+    
 </head>
 <body>
-    <h2>this is User Home</h2>
-</body>
-</html>
+    <section id="content">
+        <h2>THis is user Home</h2>
+    </section>
+    </body>
+    <script>
+        alert("This is the User Home Page")
+    </script>
+    </html>

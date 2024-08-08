@@ -35,6 +35,8 @@ public class UserRegistration {
     private String password;
 @NotNull
     private String about;
+    private String contact1;
+    private String contact2;
 
     private byte[] profilePhoto;
 }

@@ -5,21 +5,21 @@
    
 </head>
 <body class="bg-gray-100">
-    <form id="content"   data-th-action="@{'/new-user'}" method="post" class="mt-20 mx-auto max-w-lg p-6 bg-white border rounded-lg shadow-md" onsubmit="validateForm(event)">
+    <form id="content"  method="post"   data-th-action="@{'/new-user'}" data-th-object="${userRegistration}"   class="mt-20 mx-auto max-w-lg p-6 bg-white border rounded-lg shadow-md" onsubmit="validateForm(event)">
         <h1 class="mb-8 text-3xl text-center font-semibold">Sign up</h1>
         
         <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
             <div class="flex flex-col">
                 <label for="fname" class="font-semibold">First Name:</label>
-                <input type="text" name="fName" id="fname" placeholder="First Name" class="mt-1 rounded-md p-2 border" required>
+                <input type="text" data-th-field="*{fName}" name="fName" id="fname" placeholder="First Name" class="mt-1 rounded-md p-2 border" required>
             </div>
             <div class="flex flex-col">
                 <label for="mname" class="font-semibold">Middle Name:</label>
-                <input type="text" name="mName" id="mname" placeholder="Middle Name" class="mt-1 rounded-md p-2 border" required>
+                <input type="text" data-th-field="*{mName}" name="mName" id="mname" placeholder="Middle Name" class="mt-1 rounded-md p-2 border" required>
             </div>
             <div class="flex flex-col">
                 <label for="lname" class="font-semibold">Last Name:</label>
-                <input type="text" id="lname" name="lName"  placeholder="Last Name" class="mt-1 rounded-md p-2 border" required>
+                <input type="text" data-th-field="*{lName}" id="lname" name="lName"  placeholder="Last Name" class="mt-1 rounded-md p-2 border" required>
             </div>
         </div>
 
@@ -28,20 +28,20 @@
             <div class="flex flex-col">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
                     Gmail:</label>
-                <input id="email" name="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="email" placeholder="abc@gmail.com" onmouseleave="checkEmail()" required>
+                <input id="email" data-th-field="*{email}" name="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="email" placeholder="abc@gmail.com" onmouseleave="checkEmail()" required>
                 <p class=" font-semibold text-red-700 ">Invalid Gmail</p>
             </div>
             <div class="flex flex-col">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="contact1">
                     Contact 1:</label>
-                <input id="contact1" name="contact1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="text" placeholder="+91 12345 67890" required>
+                <input id="contact1" data-th-field="*{contact1}" name="contact1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="text" placeholder="+91 12345 67890" required>
                 <p class=" font-semibold text-red-700 ">Invalid contact</p>
 
             </div>
             <div class="flex flex-col">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="contact2">
                     Contact 2:</label>
-                <input id="contact2" name="contact2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="text" placeholder="+91 12345 67890">
+                <input id="contact2" data-th-field="*{contact2}" name="contact2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="text" placeholder="+91 12345 67890">
                 <p class=" font-semibold text-red-700 ">Invalid contact</p>
 
             </div>
@@ -51,7 +51,7 @@
         <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
             <div class="flex flex-col">
                 <label for="password" class="font-semibold" >Password:</label>
-                <input type="password" name="password" id="password" class="w-full rounded-md p-2 border mt-1" placeholder="*******" required>
+                <input type="password" data-th-field="*{password}" name="password" id="password" class="w-full rounded-md p-2 border mt-1" placeholder="*******" required>
             </div>
             <div class="flex flex-col">
                 <label for="confirm_password" id="confirm-password" class="font-semibold">Confirm Password:</label>
@@ -64,13 +64,13 @@
         <!-- About -->
         <div class="flex flex-col mb-6">
             <label for="message" class="block mb-2 text-sm font-medium text-gray-900">About:</label>
-            <textarea id="about" name="about" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Leave a comment..."></textarea>
+            <textarea id="about" data-th-field="*{about}" name="about" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Leave a comment..."></textarea>
         </div>
 
         <!-- Profile Image -->
         <div class="flex flex-col mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900" for="user_avatar">Upload profile Photo:</label>
-            <input id="profilePhoto" name="profilePhoto" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="user_avatar_help"  type="file">
+            <input id="profilePhoto" data-th-field="*{about}" name="profilePhoto" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="user_avatar_help"  type="file">
             <div class="mt-1 text-sm text-gray-500" id="user_avatar_help">A profile picture is useful to confirm you are logged into your account</div>
         </div>
 
@@ -85,8 +85,8 @@
 
         <!-- Buttons -->
         <div class="flex justify-evenly">
-            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600" role="button">Submit</button>
-            <button type="reset" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600" role="button">Reset</button>
+            <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
+            <button type="reset" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Reset</button>
         </div>
  <div class="text-grey-dark mt-6">
                     Already have an account? 

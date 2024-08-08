@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -45,6 +46,10 @@ private String email;
 
 private String contact1;
 private String contact2;
+
+@NotNull
+private String password;
+
 
 @Column(length = 1000)
 private String about;
