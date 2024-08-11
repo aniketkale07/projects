@@ -13,21 +13,46 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" data-th-href="@{css/style.css}">
+    <style>
+        #separator-sidebar {
+    transition: transform 0.3s ease;
+}
+
+#main-content {
+    transition: margin-left 0.3s ease;
+}
+
+    </style>
 </head>
 
 <body>
-<!-- <div data-th-if="userlogged" :data-th-replace="~{navbar :: usernavbar}" ? data-th-replace="~{navbar :: default-navbar}"> -->
+    <!-- Navbar section -->
+    <div data-th-replace="~{navbar :: default-navbar}"></div>
 
+    <!-- Main content with sidebar and other sections -->
+    
+    <!-- <div class=" relative flex "> -->
+
+        <!-- Sidebar section -->
+        <!-- <section data-th-replace="~{navbar :: user-sidebar}" class="w-1/4"></section> -->
+       <!-- <section id="separator-sidebar" class="fixed inset-y-0 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0  "> -->
+
+           <!-- <section data-th-replace="~{navbar :: user-sidebar}" class=""></section> -->
+       <!-- </section> -->
+        
+       <!-- <section id="main-content" class="flex-1 ml-0 transition-all"> -->
+           <!-- </section>  -->
+           <section id="main-content" class="">
+    
 </div>
-<div data-th-replace="~{navbar :: default-navbar}"></div>
+<section data-th-replace="${content}" class=""></section>
 
-    <section data-th-replace="${content}"></section>
+    <!-- Footer section -->
+    <footer data-th-replace="~{footer :: footer}"></footer>
 
-    <footer data-th-replace="~{footer :: footer}">
-
-    </footer>
+    <script data-th-replace="${script}">
+        
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
-    <script data-th-replace="${script}"></script>
 </body>
-
 </html>

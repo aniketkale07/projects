@@ -1,7 +1,7 @@
 package scm.service;
 
 import java.util.ArrayList;
-
+import java.util.Optional;
 
 import scm.entity.Contact;
 import scm.entity.User;
@@ -12,16 +12,16 @@ public interface UserService {
     User saveUser(User user);
 
     // Get User by Id
-    scm.entity.User getUserById(Long userId);
+    Optional<User> getUserById(Long userId);
 
 //Get User BY Gmail
-User getByEmail(String email);
+User findUserByEmail(String email);
 
     // Display All User
     ArrayList<User> getAllUsers();
 
     // Update User
-    User updateUser(User user);
+    Optional<User> updateUser(User user);
 
     // Delete User
     void deleteUserById(Long userId);

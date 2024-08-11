@@ -3,9 +3,13 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.catalina.authenticator.jaspic.PersistentProviderRegistrations.Providers;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -56,13 +60,21 @@ private String about;
 
 private byte[] profilePhoto;
 
-@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-private ArrayList<Contact> contact;
-    
 
 // Verification of gmail
 private boolean gmailVerified=false;
 private boolean isEnabled=false;
 private boolean isLogin=false;
+private boolean phoneVerified=false;
+
+
+// @Enumerated(value = EnumType.STRING)
+// SELF, GOOGLE , FACEBOOK, TWITTER Linkden
+// private Providers providers = Providers.class;
+// private String providerUserId;
+
+@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+private ArrayList<Contact> contact;
+    
 
 }

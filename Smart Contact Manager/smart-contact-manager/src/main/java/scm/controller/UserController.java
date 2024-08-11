@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import scm.entity.User;
+import scm.form.AddContactForm;
 import scm.form.ResetForm;
 import scm.service.UserService;
 
@@ -31,35 +32,55 @@ public class UserController {
     }
     
     // Delete Contact
-    @GetMapping("/deletecontact")
+    @GetMapping("/user/deletecontact")
     public String deleteContact(Model model){
         return "user/deletecontact";
     }
 
     // Add Contact
-    @GetMapping("addcontact")
-    public String addContact(){
+    @GetMapping("/user/addcontact")
+    public String addContact(Model model){
+        model.addAttribute("addContact", new AddContactForm());
         return "user/addcontact";
     }
 
     // Display Contact
-    @GetMapping("displaycontact")
+    @GetMapping("/user/displaycontact")
     public String displayContact() {
         return new String("user/displaycontact");
     }
     
     // User Profile
-    @GetMapping("profile")
+    @GetMapping("/user/profile")
     public String userProfile() {
         return new String("user/userprofile");
     }
 
     // Contact Profile
-    @GetMapping("contactprofile")
+    @GetMapping("/user/contactprofile")
     public String contactProfile() {
         return new String("user/contactProfile");
     }
     
+
+
+    // Add Contact to DB
+@PostMapping("/user/addContactDB")
+public String addContactToDataBase(@ModelAttribute("addContact") AddContactForm addContact){
+    System.out.println(addContact);
+    return null;
+    
+}
+
+
+
+
+
+
+
+
+
+
     //Forget Password
     // ----> 1. check user is validated
     // ----> 2.check the new Password is same or different 

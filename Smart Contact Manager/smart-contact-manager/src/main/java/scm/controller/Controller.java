@@ -84,7 +84,7 @@ public String thanksPage() {
         String email=userReg.getEmail().strip();
 
         //Retrive user from DB
-        User dbUser = userService.getByEmail(email);
+        User dbUser = userService.findUserByEmail(email);
 
         if(email==dbUser.getEmail()){
             System.out.println("Duplicate User Email..");
