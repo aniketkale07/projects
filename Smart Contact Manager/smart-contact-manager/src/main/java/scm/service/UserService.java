@@ -1,6 +1,7 @@
 package scm.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import scm.entity.Contact;
@@ -14,11 +15,15 @@ public interface UserService {
     // Get User by Id
     Optional<User> getUserById(Long userId);
 
+//  check for duplicate email . -> to Avoid duplicate email
+boolean isEmailExist(String email);
+boolean isUserExist(long userId);
+
 //Get User BY Gmail
 User findUserByEmail(String email);
 
     // Display All User
-    ArrayList<User> getAllUsers();
+    List<User> getAllUsers();
 
     // Update User
     Optional<User> updateUser(User user);
@@ -44,5 +49,5 @@ User findUserByEmail(String email);
     Contact addContact(Contact contact);
 
     // Display All Contact
-    ArrayList<Contact> displayAllContact(Long userId);
+    List<Contact> displayAllContact(Long userId);
 }

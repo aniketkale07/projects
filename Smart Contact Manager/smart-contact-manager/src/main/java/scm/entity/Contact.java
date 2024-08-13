@@ -1,6 +1,5 @@
 package scm.entity;
 
-import java.util.Arrays;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
