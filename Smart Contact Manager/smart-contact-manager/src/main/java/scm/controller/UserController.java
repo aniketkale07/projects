@@ -1,5 +1,7 @@
 package scm.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +23,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
+private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     //User -Home 
     @GetMapping("/user/home")
     public String userHome() {
+        logger.info("THis is User Home..");
         return new String("user/userhome");
     }
     
@@ -64,18 +69,8 @@ public class UserController {
 @PostMapping("/user/addContactDB")
 public String addContactToDataBase(@ModelAttribute("addContact") AddContactForm addContact){
     System.out.println(addContact);
-    return null;
-    
+    return null;   
 }
-
-
-
-
-
-
-
-
-
 
     //Forget Password
     // ----> 1. check user is validated

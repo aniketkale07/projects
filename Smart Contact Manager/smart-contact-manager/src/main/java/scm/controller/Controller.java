@@ -28,7 +28,7 @@ public class Controller {
     private UserService userService;
 
 
-    // private Logger logger=Logger.getLogger(getClass().getName());
+    
     // -------------------------- Model -------------------------------
 
     @GetMapping("/home")
@@ -95,14 +95,6 @@ public class Controller {
             Message message =Message.builder().content("Invalid Email").type(MessageType.red).build();
             session.setAttribute("message", message);
             
-            // message Type
-            // MessageType messageType = MessageType.red;
-            // if (messageType != null) {
-            //     Message message = new Message("Duplicate Email..", messageType);
-            //     session.setAttribute("message", message);
-            //     // RedirectAttributes.addFlashAttribute("message",message);
-            // }
-
             System.out.println("Duplicate User Email..");
         } else {
             String encryptedPasswd = userReg.getPassword();
@@ -155,7 +147,7 @@ public String checkLogin(@Valid @ModelAttribute("userLogin") LoginForm loginForm
             } else {
                 user.setLogin(true);
                 session.setAttribute("user", user);
-                return "redirect:/home";
+                return "redirect:/user/home";
             }
         } catch (Exception e) {
             System.out.println(e);
