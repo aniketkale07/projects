@@ -20,7 +20,7 @@ boolean isEmailExist(String email);
 boolean isUserExist(long userId);
 
 //Get User BY Gmail
-User findUserByEmail(String email);
+Optional<User> findUserByEmail(String email);
 
     // Display All User
     List<User> getAllUsers();

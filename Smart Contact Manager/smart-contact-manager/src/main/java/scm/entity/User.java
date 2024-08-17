@@ -1,20 +1,32 @@
 package scm.entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.Enumerated; 
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -35,7 +47,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class User {
+public class User implements UserDetails{
 
     /**
      * Unique identifier for the user.
@@ -44,91 +56,43 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    /**
-     * First name of the user.
-     * Example: "John"
-     */
-    @Column(nullable=false)
+    
     private String firstName;
-
-    /**
-     * Middle name of the user.
-     * Example: "Michael"
-     */
+    
     private String middleName;
 
-    /**
-     * Last name of the user.
-     * Example: "Doe"
-     */
+    
     private String lastName;
 
-    /**
-     * Email address of the user.
-     * Must be unique and not null.
-     * Example: "johndoe@example.com"
-     */
-    @Column(nullable = false, unique = true)
+
+    // @Getter(value = AccessLevel.NONE)
     private String email;
 
-    /**
-     * Primary contact number of the user.
-     * Example: "1234567890"
-     */
+
     private String contact1;
 
-    /**
-     * Secondary contact number of the user.
-     * Example: "0987654321"
-     */
+    
     private String contact2;
 
-    /**
-     * Password for the user.
-     * Must not be null.
-     * Example: "password123"
-     */
-    @NotNull
+    
     private String password;
 
-    /**
-     * About me description of the user.
-     * Maximum length of 1000 characters.
-     * Example: "I am a software engineer"
-     */
-    @Column(length = 1000)
+    
     private String about;
 
-    /**
-     * Profile photo of the user.
-     */
     private byte[] profilePhoto;
 
-    /**
-     * Indicates whether the user's Gmail account is verified.
-     * Default value: false
-     */
     @Builder.Default
     private boolean gmailVerified=false;
 
-    /**
-     * Indicates whether the user's account is enabled.
-     * Default value: false
-     */
     @Builder.Default
+    @Getter(value = AccessLevel.NONE)
     private boolean isEnabled=false;
 
-    /**
-     * Indicates whether the user is currently logged in.
-     * Default value: false
-     */
     @Builder.Default
     private boolean isLogin=false;
 
-    /**
-     * Indicates whether the user's phone number is verified.
-     * Default value: false
-     */
+
     @Builder.Default
     private boolean phoneVerified=false;
 
@@ -145,6 +109,7 @@ public class User {
      * Unique identifier for the user's provider account.
      * Example: "1234567890" for Google provider
      */
+
     private String providerUserId;
 
     /**
@@ -153,4 +118,33 @@ public class User {
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Contact> contact = new ArrayList<>();
+
+
+    @ElementCollection(fetch =FetchType.EAGER)
+private List<String> roleList=new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // TODO Auto-generated method stub
+        Collection<SimpleGrantedAuthority> roles = roleList.stream()
+        .map(role-> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
+
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        // TODO Auto-generated method stub
+        return this.email;
+    }
+
+    @Override
+    public boolean isEnabled(){
+        return this.isEnabled; 
+    }
+
+    @Override
+    public String getPassword(){
+        return this.password;
+    }
 }

@@ -87,7 +87,7 @@ public class Controller {
         String email = userReg.getEmail().strip();
 
         // Retrive user from DB
-        User dbUser = userService.findUserByEmail(email);
+        User dbUser = userService.findUserByEmail(email).get();
 
         if (dbUser != null) {
 
@@ -135,7 +135,7 @@ public String checkLogin(@Valid @ModelAttribute("userLogin") LoginForm loginForm
         String password = loginForm.getPassword();
 
         try {
-            User user = userService.findUserByEmail(email);
+            User user = userService.findUserByEmail(email).get();
             if (user == null) {
                 Message message = Message.builder().content("Invalid Email ").type(MessageType.red).build();
                 session.setAttribute("message", message);
