@@ -1,7 +1,11 @@
 package scm.controller;
+
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +15,14 @@ import scm.entity.User;
 import scm.form.ContactForm;
 import scm.form.LoginForm;
 import scm.form.UserRegistration;
+import scm.form.UserRegistrationForm;
 import scm.helper.Message;
 import scm.helper.MessageType;
 import scm.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -23,12 +31,12 @@ public class Controller {
 
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
-
     @Autowired(required = true)
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    
     // -------------------------- Model -------------------------------
 
     @GetMapping("/home")
@@ -73,89 +81,128 @@ public class Controller {
     }
 
     // -------------------- CREATE NEW USER------------------
-    @PostMapping("/new-user")
-    public String newUser(@ModelAttribute("userReg") UserRegistration userReg, HttpSession session) {
 
-        // TODO: process POST request
+    @PostMapping("/new-user")
+    public String newUser(@ModelAttribute("userReg") UserRegistrationForm userReg,
+            HttpSession session, Model model) {
+
+
+ // TODO: process POST request
         // Processing Before Saving the user to database
         // Check the User is alredy availble in DB or not
         // if user is already availble in DB. then --> Invalid user
         // Otherwise save in DB and Redirect the user to login page
         // Add Encryption to password
-        // Create new User
-        User user = new User();
-        String email = userReg.getEmail().strip();
+        // Create new User                String email = userReg.getEmail().strip();
+        Optional<User> dbUser;
+        // Retrieve user from DB
+        try {
 
-        // Retrive user from DB
-        User dbUser = userService.findUserByEmail(email).get();
+            dbUser = userService.findUserByEmail(email);
 
-        if (dbUser != null) {
+            if (dbUser.isPresent()) {
+                // User already exists, set error message
+                Message message = Message.builder()
+                        .content("Invalid Email: User already exists")
+                        .type(MessageType.red)
+                        .build();
 
-            //---------------With Builder------------------
-            Message message =Message.builder().content("Invalid Email").type(MessageType.red).build();
-            session.setAttribute("message", message);
-            
-            System.out.println("Duplicate User Email..");
-        } else {
-            String encryptedPasswd = userReg.getPassword();
+                session.setAttribute("message", message);
 
-            user.setFirstName(userReg.getFName());
-            user.setMiddleName(userReg.getMName());
-            user.setLastName(userReg.getLName());
+                return "redirect:/signup"; // Return to signup page with a general error message
 
-            user.setAbout(userReg.getAbout());
-            user.setEmail(userReg.getEmail());
-            user.setPassword(encryptedPasswd);
-            user.setContact1(userReg.getContact1());
-            user.setContact2(userReg.getContact2());
-            user.setProfilePhoto(userReg.getProfilePhoto());
+            } else {
 
-            userService.saveUser(user);
+                User user = new User();
+                // Create and save new user
+                user.setFirstName(userReg.getFName());
+                user.setMiddleName(userReg.getMName());
+                user.setLastName(userReg.getLName());
+                user.setAbout(userReg.getAbout());
+                user.setEmail(userReg.getEmail());
+                user.setPassword(userReg.getPassword());
+                user.setContact1(userReg.getContact1());
+                user.setContact2(userReg.getContact2());
+                user.setProfilePhoto(userReg.getProfilePhoto());
 
-            //---------------Successs  Builder------------------
-            Message message =Message.builder().content("Registration Successfully ").type(MessageType.green).build();
-            session.setAttribute("message", message);
-            System.out.println("User Registration Successfully");
-            
+                userService.saveUser(user);
+
+                // Success message
+                Message message = Message.builder()
+                        .content("Registration Successful")
+                        .type(MessageType.green)
+                        .build();
+                session.setAttribute("message", message);
+
+                return "redirect:/login"; // Redirect to login page after successful registration
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            logger.error("invalid email", e);
+            e.printStackTrace();
+            return "redirect:/signup";
         }
-        return "redirect:/login";
     }
 
     // ----------------- AUTHORIZATION -------------------------------------
 
     // -------------Check Login-----------------------
-    @GetMapping("/checklogin")
-public String checkLogin(@Valid @ModelAttribute("userLogin") LoginForm loginForm, BindingResult bindingResult, HttpSession session) {
-    if (bindingResult.hasErrors()) {
-        Message message = Message.builder().content("Invalid Email ").type(MessageType.red).build();
-        session.setAttribute("message", message);
-        return "redirect:/login";
-    } else {
+    @RequestMapping(value = "/checklogin", method = {RequestMethod.GET, RequestMethod.POST})
+    public String checkLogin(@Valid @ModelAttribute("userLogin") LoginForm loginForm, BindingResult bindingResult,
+            HttpSession session) {
         String email = loginForm.getEmail();
         String password = loginForm.getPassword();
 
         try {
-            User user = userService.findUserByEmail(email).get();
-            if (user == null) {
-                Message message = Message.builder().content("Invalid Email ").type(MessageType.red).build();
-                session.setAttribute("message", message);
-                return "redirect:/login"; // return redirect instead of setting attribute and doing nothing
-            } else if (!user.getPassword().equals(password)) { // add password validation
-                Message message = Message.builder().content("Invalid Password ").type(MessageType.red).build();
+            // 1. Check if the user exists in the database
+            Optional<User> user = userService.findUserByEmail(email);
+
+            if (user.isPresent()) {
+                // 2. Check if the password is correct
+                // Use a secure method to compare passwords (assuming passwords are hashed)
+                if (passwordEncoder.matches(password, user.get().getPassword())) {
+                    // Login successful, redirect to the dashboard
+                    Message message = Message.builder()
+                            .content("Login Successfully")
+                            .type(MessageType.green)
+                            .build();
+
+                    session.setAttribute("message", message);
+                    return "redirect:/user/userhome";
+                } else {
+                    // Password is incorrect, display an error message
+                    Message message = Message.builder()
+                            .content("Invalid Password")
+                            .type(MessageType.red)
+                            .build();
+
+                    session.setAttribute("message", message);
+                    return "redirect:/login";
+                    
+                }
+            } else {
+                // User does not exist, display an error message
+                Message message = Message.builder()
+                        .content("Invalid User, Please try again.")
+                        .type(MessageType.red)
+                        .build();
+
                 session.setAttribute("message", message);
                 return "redirect:/login";
-            } else {
-                user.setLogin(true);
-                session.setAttribute("user", user);
-                return "redirect:/user/home";
             }
         } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
-            return "redirect:/login"; // return redirect instead of doing nothing
+            // Handle exception and display an error message
+            Message message = Message.builder()
+                    .content("Invalid User, Please try again. Error: " + e.getMessage())
+                    .type(MessageType.red)
+                    .build();
+
+            session.setAttribute("message", message);
+            return "redirect:/login";
         }
     }
-}
+
     // Contact us form BACKEND ------------- form submit here-------
     @PostMapping("/submit-contact-form")
     public String submitContactform(@ModelAttribute("contactform") ContactForm contactForm) {
