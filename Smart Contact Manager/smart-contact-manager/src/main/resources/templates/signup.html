@@ -1,146 +1,274 @@
 <!DOCTYPE html>
 <html lang="en" data-th-replace="~{base-template :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
 <head>
     <title>Sign up Form</title>
-   
 </head>
+
 <body class="bg-gray-100">
-    <form id="content"  method="post"   data-th-action="@{'/new-user'}" data-th-object="${userRegistration}"   class="mt-14 mx-auto max-w-lg p-6 lg bg-white border rounded-lg shadow-md" onsubmit="validateForm(event)">
+    <form id="content" method="post" data-th-action="@{'/new-user'}" data-th-object="${userRegistration}"
+        class="mt-14 mx-auto max-w-lg p-6 lg bg-white border rounded-lg shadow-md" onsubmit="validateForm(event)">
         <div data-th-if="session.message" data-th-replace="~{message :: message}"> </div>
         <h1 class="mb-8 text-3xl text-center font-semibold">Sign up</h1>
-        
+
+        <!-- Name Fields -->
         <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
             <div class="flex flex-col">
                 <label for="fname" class="font-semibold">First Name:</label>
-                <input type="text" data-th-field="*{fName}" name="fName" id="fname" placeholder="First Name" class="mt-1 rounded-md p-2 border" required>
+                <input type="text" data-th-field="*{fName}" name="fName" id="fname" placeholder="First Name"
+                    class="mt-1 rounded-md p-2 border" required oninput="validateName('fname')">
+                <p class="text-red-500 text-sm font-semibold" id="fnameError" style="display: none;">First name is
+                    required.</p>
             </div>
             <div class="flex flex-col">
                 <label for="mname" class="font-semibold">Middle Name:</label>
-                <input type="text" data-th-field="*{mName}" name="mName" id="mname" placeholder="Middle Name" class="mt-1 rounded-md p-2 border" required>
+                <input type="text" data-th-field="*{mName}" name="mName" id="mname" placeholder="Middle Name"
+                    class="mt-1 rounded-md p-2 border" required oninput="validateName('mname')">
+                <p class="text-red-500 text-sm font-semibold" id="mnameError" style="display: none;">Middle name is
+                    required.</p>
             </div>
             <div class="flex flex-col">
                 <label for="lname" class="font-semibold">Last Name:</label>
-                <input type="text" data-th-field="*{lName}" id="lname" name="lName"  placeholder="Last Name" class="mt-1 rounded-md p-2 border" required>
+                <input type="text" data-th-field="*{lName}" id="lname" name="lName" placeholder="Last Name"
+                    class="mt-1 rounded-md p-2 border" required oninput="validateName('lname')">
+                <p class="text-red-500 text-sm font-semibold" id="lnameError" style="display: none;">Last name is
+                    required.</p>
             </div>
         </div>
 
         <!-- Email and Contact Number -->
         <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
             <div class="flex flex-col">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
-                    Gmail:</label>
-                <input id="email" data-th-field="*{email}" name="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="email" placeholder="abc@gmail.com" onmouseleave="checkEmail()" required>
-                <p class=" font-semibold text-red-700 ">Invalid Gmail</p>
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="email">Gmail:</label>
+                <input id="email" name="email"
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    type="email" placeholder="abc@gmail.com" required oninput="validateEmail()">
+                <p class="text-red-500 text-sm font-semibold" id="emailError" style="display: none;">Invalid email
+                    format.</p>
             </div>
             <div class="flex flex-col">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="contact1">
-                    Contact 1:</label>
-                <input id="contact1" data-th-field="*{contact1}" name="contact1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="text" placeholder="+91 12345 67890" required>
-                <p class=" font-semibold text-red-700 ">Invalid contact</p>
-
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="contact1">Contact
+                    1:</label>
+                <input id="contact1" name="contact1"
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 contact-grouped"
+                    type="text" placeholder="+91 12345 67890" required oninput="formatContact(this)">
+                <p class="text-red-500 text-sm font-semibold" id="contact1Error" style="display: none;">Invalid contact
+                    number.</p>
             </div>
             <div class="flex flex-col">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="contact2">
-                    Contact 2:</label>
-                <input id="contact2" data-th-field="*{contact2}" name="contact2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  type="text" placeholder="+91 12345 67890">
-                <p class=" font-semibold text-red-700 ">Invalid contact</p>
-
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="contact2">Contact
+                    2:</label>
+                <input id="contact2" name="contact2"
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 contact-grouped"
+                    type="text" placeholder="+91 12345 67890" oninput="formatContact(this)">
+                <p class="text-red-500 text-sm font-semibold" id="contact2Error" style="display: none;">Invalid contact
+                    number.</p>
             </div>
         </div>
 
         <!-- Passwords -->
+        <!-- Passwords -->
         <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
             <div class="flex flex-col">
-                <label for="password" class="font-semibold" >Password:</label>
-                <input type="password" data-th-field="*{password}" name="password" id="password" class="w-full rounded-md p-2 border mt-1" placeholder="*******" required>
+                <label for="password" class="font-semibold">Password:</label>
+                <input type="password" data-th-field="*{password}" name="password" id="password"
+                    class="w-full rounded-md p-2 border mt-1" placeholder="*******" required>
             </div>
             <div class="flex flex-col">
                 <label for="confirm_password" id="confirm-password" class="font-semibold">Confirm Password:</label>
-                <input type="password" name="confirm_password" id="confirm_password" class="w-full rounded-md p-2 border mt-1" placeholder="*******"  onmouseout="checkPassword()" required>
-                <p class="hidden font-sans text-red-700"> Password Does not Match..</p>
-                <p class="hidden font-sans text-blue-700 "> Password Match..</p>
+                <input type="password" name="confirm_password" id="confirm_password"
+                    class="w-full rounded-md p-2 border mt-1" placeholder="*******" required>
+                <p class="text-red-500 text-sm font-semibold" id="passwordMatchError" style="display: none;">Password
+                    does not match.</p>
             </div>
+        </div>
+
+        <!-- Show Password Checkbox -->
+        <div class="mb-6">
+            <input type="checkbox" id="showPassword" onmouseenter="togglePasswordVisibility()">
+            <label for="showPassword" class="text-sm font-medium text-gray-900">Show Password</label>
         </div>
 
         <!-- About -->
         <div class="flex flex-col mb-6">
             <label for="message" class="block mb-2 text-sm font-medium text-gray-900">About:</label>
-            <textarea id="about" data-th-field="*{about}" name="about" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Leave a comment..."></textarea>
+            <textarea id="about" data-th-field="*{about}" name="about" rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Leave a comment..." required oninput="validateAbout()"></textarea>
+            <p class="text-red-500 text-sm font-semibold" id="aboutError" style="display: none;">This field is required.
+            </p>
         </div>
 
         <!-- Profile Image -->
         <div class="flex flex-col mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900" for="user_avatar">Upload profile Photo:</label>
-            <input id="profilePhoto" data-th-field="*{about}" name="profilePhoto" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="user_avatar_help"  type="file">
-            <div class="mt-1 text-sm text-gray-500" id="user_avatar_help">A profile picture is useful to confirm you are logged into your account</div>
+            <label class="block mb-2 text-sm font-medium text-gray-900" for="profilePhoto">Upload profile Photo:</label>
+            <input id="profilePhoto" data-th-field="*{profilePhoto}" name="profilePhoto"
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                aria-describedby="user_avatar_help" type="file" onchange="validateProfilePhoto()">
+            <div class="mt-1 text-sm text-gray-500" id="user_avatar_help">A profile picture is useful to confirm you are
+                logged into your account</div>
+            <p class="text-red-500 text-sm font-semibold" id="profilePhotoError" style="display: none;">Please upload a
+                profile photo.</p>
         </div>
 
         <!-- Checkbox -->
         <fieldset class="flex flex-col mb-6">
             <legend class="sr-only">Checkbox variants</legend>
             <div class="flex items-center">
-                <input id="checkbox"  type="checkbox" value="underline" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" onmouseleave="check_box()" >
-                <label for="checkbox-1" class="ml-2 text-sm font-medium text-gray-900">I agree to the <a href="#" class="text-blue-600 hover:underline">terms and conditions</a>.</label>
+                <input id="checkbox" type="checkbox" value="underline"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" required>
+                <label for="checkbox-1" class="ml-2 text-sm font-medium text-gray-900">I agree to the <a href="#"
+                        class="text-blue-600 hover:underline">terms and conditions</a>.</label>
             </div>
         </fieldset>
 
         <!-- Buttons -->
         <div class="flex justify-evenly">
-            <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
-            <button type="reset" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Reset</button>
+            <button type="submit"
+                class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
+            <button type="reset"
+                class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Reset</button>
         </div>
- <div class="text-grey-dark mt-6">
-                    Already have an account? 
-                    <a class="no-underline border-b border-blue text-blue" data-th-href="@{'/login'}">
-                        Log in
-                    </a>.
-                </div>
+        <div class="text-grey-dark mt-6">
+            Already have an account?
+            <a class="no-underline border-b border-blue text-blue" data-th-href="@{'/login'}">
+                Log in
+            </a>.
+        </div>
     </form>
 
+    <!-- JavaScript Validations -->
     <script>
-
-//Functioon for Check Password is match
-//Checks the all form will submit or not 
-
-
-        //checks User name
-        function check_username(){
-            
+        // Validate Name Fields
+        function validateName(fieldId) {
+            const name = document.getElementById(fieldId).value;
+            const nameError = document.getElementById(fieldId + 'Error');
+            if (name.trim() === '') {
+                nameError.style.display = 'block';
+            } else {
+                nameError.style.display = 'none';
+            }
         }
 
-        // Check password 
-function check_password(){
-            // event.preventDefault();
-            const password = document.getElementById('password');
-            const confirm_password=document.getElementById('confirm-password');
-            const password_match=document.getElementById('matched');
-            const password_unmatch=document.getElementById('not_matched');
-            if(password!=confirm_password){
-                // make passwor not matched Visible
-            }else{
-                // make password Match Visible
-            }            
+        // Validate Email Field
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const emailError = document.getElementById('emailError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailError.style.display = 'block';
+            } else {
+                emailError.style.display = 'none';
+            }
         }
 
-        // Check Email
-        function check_email(){
-            const email=document.getElementById("email").innerText;
-            console.log(email)
-            
+        // Validate Contact Fields
+        function validateContact(fieldId) {
+            const contact = document.getElementById(fieldId).value;
+            const contactError = document.getElementById(fieldId + 'Error');
+            const contactRegex = /^\+?\d{1,4}?[\d\s.-]{8,15}$/;
+            if (!contactRegex.test(contact)) {
+                contactError.style.display = 'block';
+            } else {
+                contactError.style.display = 'none';
+            }
         }
 
-        // Check Contacts
-        function check_contact(){
-            const contact=document.getElementById("contact1").innerText;
-            const contact1=document.getElementById("contact2").innerText;
+        function formatContact(input) {
+            let value = input.value.replace(/\D/g, ''); // Remove all non-digit characters
+            let formattedValue = '';
+
+            // Group digits (you can customize how you group them)
+            for (let i = 0; i < value.length; i += 3) {
+                if (i > 0 && (i % 3 === 0 || i % 5 === 0)) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value.substring(i, i + 3);
+            }
+
+            input.value = formattedValue.trim();
         }
-        //Check Checked Box
-        function check_box(){
-            const check=document.getElementById("checkbox");
-            if(check!=true){
-                alert("Accept Terms and Conditations...")
+
+        // Validate Password Field
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const passwordError = document.getElementById('passwordError');
+            if (password.length < 8) {
+                passwordError.style.display = 'block';
+            } else {
+                passwordError.style.display = 'none';
+            }
+        }
+
+        // Validate Password Match
+        function validatePasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const matchError = document.getElementById('passwordMatchError');
+            if (password !== confirmPassword) {
+                matchError.style.display = 'block';
+                password.style.borderColor = 'red';
+            } else {
+                matchError.style.display = 'none';
+            }
+        }
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('confirm_password');
+            const showPasswordCheckbox = document.getElementById('showPassword');
+
+            if (showPasswordCheckbox.checked) {
+                passwordField.type = 'text';
+                confirmPasswordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+                confirmPasswordField.type = 'password';
+            }
+        }
+
+        // Validate About Field
+        function validateAbout() {
+            const about = document.getElementById('about').value;
+            const aboutError = document.getElementById('aboutError');
+            if (about.trim() === '') {
+                aboutError.style.display = 'block';
+            } else {
+                aboutError.style.display = 'none';
+            }
+        }
+
+        // Validate Profile Photo
+        function validateProfilePhoto() {
+            const profilePhoto = document.getElementById('profilePhoto').value;
+            const profilePhotoError = document.getElementById('profilePhotoError');
+            if (profilePhoto.trim() === '') {
+                profilePhotoError.style.display = 'block';
+            } else {
+                profilePhotoError.style.display = 'none';
+            }
+        }
+
+        // Final Form Validation before Submission
+        function validateForm(event) {
+            // Call each validation function
+            validateName('fname');
+            validateName('mname');
+            validateName('lname');
+            validateEmail();
+            validateContact('contact1');
+            validateContact('contact2');
+            validatePassword();
+            validatePasswordMatch();
+            validateAbout();
+            validateProfilePhoto();
+
+            // Prevent form submission if there are validation errors
+            if (document.querySelector('.text-red-500[style="display: block;"]')) {
+                event.preventDefault();
             }
         }
     </script>
 </body>
+
 </html>

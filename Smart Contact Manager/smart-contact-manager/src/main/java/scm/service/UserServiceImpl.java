@@ -1,7 +1,5 @@
 package scm.service;
 
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,31 +28,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        // Long userId=UUID.randomUUID().toString();
+        String userId=UUID.randomUUID().toString();
         // user.setUserId(userId);
-
-
-       
+        
+       user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoleList(List.of("ROLE_USER"));
         logger.info(user.getProviders().toString());
         return userRepository.save(user);
     }
 
+    // find User by User ID
     @Override
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
 
+    // Find User by Email
     @Override
     public Optional<User> findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findUserByEmail(email);
     }
 
+    // Get ALl User
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    // Update User
     @Override
     public Optional<User> updateUser(User user) {
         User userDB = userRepository.findById(user.getUserId())
@@ -117,7 +118,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isEmailExist(String email) {
-        Optional<User> userDB = userRepository.findByEmail(email);
+        Optional<User> userDB = userRepository.findUserByEmail(email);
         return userDB!=null;
     }
 

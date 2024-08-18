@@ -86,14 +86,15 @@ public class Controller {
     public String newUser(@ModelAttribute("userReg") UserRegistrationForm userReg,
             HttpSession session, Model model) {
 
-
- // TODO: process POST request
+        // TODO: process POST request
         // Processing Before Saving the user to database
         // Check the User is alredy availble in DB or not
         // if user is already availble in DB. then --> Invalid user
         // Otherwise save in DB and Redirect the user to login page
         // Add Encryption to password
-        // Create new User                String email = userReg.getEmail().strip();
+        // Create new User
+
+        String email = userReg.getEmail().strip();
         Optional<User> dbUser;
         // Retrieve user from DB
         try {
@@ -148,15 +149,21 @@ public class Controller {
     // ----------------- AUTHORIZATION -------------------------------------
 
     // -------------Check Login-----------------------
-    @RequestMapping(value = "/checklogin", method = {RequestMethod.GET, RequestMethod.POST})
-    public String checkLogin(@Valid @ModelAttribute("userLogin") LoginForm loginForm, BindingResult bindingResult,
-            HttpSession session) {
+    // @RequestMapping(value = "/checklogin", method = {RequestMethod.GET,
+    // RequestMethod.POST})
+    @GetMapping("/checklogin")
+    public String checkLogin( @ModelAttribute("userLogin") LoginForm loginForm, HttpSession session) {
         String email = loginForm.getEmail();
         String password = loginForm.getPassword();
 
         try {
             // 1. Check if the user exists in the database
             Optional<User> user = userService.findUserByEmail(email);
+
+// testing purpose
+System.out.println(email);
+System.out.println(password);
+System.out.println(user.get());
 
             if (user.isPresent()) {
                 // 2. Check if the password is correct
@@ -169,7 +176,7 @@ public class Controller {
                             .build();
 
                     session.setAttribute("message", message);
-                    return "redirect:/user/userhome";
+                    return new String("/user/userhome");
                 } else {
                     // Password is incorrect, display an error message
                     Message message = Message.builder()
@@ -178,8 +185,7 @@ public class Controller {
                             .build();
 
                     session.setAttribute("message", message);
-                    return "redirect:/login";
-                    
+                    return new String("/login");
                 }
             } else {
                 // User does not exist, display an error message
@@ -209,6 +215,5 @@ public class Controller {
         System.out.println(contactForm);
         System.out.println("Form Submit");
         return "redirect:/thanks";
-
     }
 }

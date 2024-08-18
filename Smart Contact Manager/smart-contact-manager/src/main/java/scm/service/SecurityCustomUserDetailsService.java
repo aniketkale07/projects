@@ -20,7 +20,7 @@ public class SecurityCustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // TODO Auto-generated method stub
-       return userRepository.findByEmail(username)
+       return userRepository.findUserByEmail(username)
        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
     

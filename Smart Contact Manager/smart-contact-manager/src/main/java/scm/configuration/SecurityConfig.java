@@ -1,18 +1,14 @@
 package scm.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 import scm.service.SecurityCustomUserDetailsService;
 
 @Configuration
@@ -20,7 +16,7 @@ public class SecurityConfig {
 
     @Autowired(required = true)
     SecurityCustomUserDetailsService UserDetailsService;
-
+    
     // Authentication Provider
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -28,10 +24,10 @@ public class SecurityConfig {
         daoAuthenticationProvider.setUserDetailsService(UserDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
-
+    
     }
-
-    // Security Configuration
+    
+    // Security Configuration specift the Routes
     @Bean
     public SecurityFilterChain securityFilterChain(
             org.springframework.security.config.annotation.web.builders.HttpSecurity HttpSecurity) throws Exception {
@@ -43,11 +39,47 @@ public class SecurityConfig {
                     // it will permit all other request public 
                     authorize.anyRequest().permitAll();
                 });
+    
+                HttpSecurity.formLogin(formLogin ->{
+                    formLogin.loginPage("/login")
+                            .loginProcessingUrl("/checklogin")
+                            .successForwardUrl("/user/userhome")
+                            .failureForwardUrl("/login?error=true")
+                            .usernameParameter("email")
+                            .passwordParameter("password");
 
-                HttpSecurity.formLogin(Customizer.withDefaults());
-        return HttpSecurity.build();
+            // formLogin.failureHandler(new AuthenticationFailureHandler() {
+
+            //     @Override
+            //     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+            //             AuthenticationException exception) throws IOException, ServletException {
+            //         // TODO Auto-generated method stub
+            //         throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationFailure'");
+            //     }
+                
+            // });
+
+            // formLogin.successHandler(new AuthenticationSuccessHandler() {
+
+            //     @Override
+            //     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            //             Authentication authentication) throws IOException, ServletException {
+            //         // TODO Auto-generated method stub
+            //         throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationSuccess'");
+            //     }
+                
+            // });
+    });
+    
+    HttpSecurity.csrf(AbstractHttpConfigurer::disable);
+    HttpSecurity.logout(logoutForm->{
+        logoutForm.logoutUrl("/logout");
+        logoutForm.logoutSuccessUrl("/login?logout=true");
+    });
+    
+        return HttpSecurity.build();   
     }
-
+    
     // Password Encoder
     @Bean
     public PasswordEncoder passwordEncoder() {

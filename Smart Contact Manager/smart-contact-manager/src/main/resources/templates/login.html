@@ -21,7 +21,7 @@
           <h1 class="text-xl text-center underline font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Sign In To Your Account
           </h1>
-          <form class="space-y-4 md:space-y-6" data-th-action="@{checklogin}" data-th-object="${loginForm}">
+          <form method="get" class="space-y-4 md:space-y-6" data-th-action="@{checklogin}" data-th-object="${loginForm}">
             <!------------------- message box-------------------- -->
             <div data-th-if="session.message" data-th-replace="~{message :: message}"></div>
             
