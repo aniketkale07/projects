@@ -155,11 +155,6 @@ public class Controller {
             // 1. Check if the user exists in the database
             Optional<User> user = userService.findUserByEmail(email);
 
-// testing purpose
-System.out.println(email);
-System.out.println(password);
-System.out.println(user.get());
-
             if (user.isPresent()) {
                 // 2. Check if the password is correct
                 // Use a secure method to compare passwords (assuming passwords are hashed)
