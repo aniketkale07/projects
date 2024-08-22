@@ -7,11 +7,7 @@
 
 <body>
   <section id="content" class="flex min-h-screen bg-white dark:bg-gray-900 bg-custom">
-    <!-- Image Column: Hidden on small devices, visible on medium and larger devices -->
-    <!-- <div class="hidden md:flex w-1/2 items-center justify-center bg-white dark:bg-gray-800">
-      <img th:src="@{/images/image.png}" alt="This is an image" class="">
-    </div>
-     -->
+    
     <!-- Form Column: Full width on small devices, half width on medium and larger devices -->
     <div class="flex flex-col items-center  justify-center px-6 py-8 w-full md:w-1/2 mx-auto lg:py-0">
       <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -23,6 +19,10 @@
           </h1>
           <form method="get" class="space-y-4 md:space-y-6" data-th-action="@{checklogin}" data-th-object="${loginForm}">
             <!------------------- message box-------------------- -->
+            <div th:if="${param.error}" class="underline text-md font-semibold">
+              Invalid username and password.</div>
+            <div th:if="${param.logout}" class="underline text-md font-semibold">
+              You have been logged out.</div>
             <div data-th-if="session.message" data-th-replace="~{message :: message}"></div>
             
             <div>
