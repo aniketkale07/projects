@@ -43,5 +43,5 @@ public class UserRegistrationForm {
 
     private String contact2;
 
-    private byte[] profilePhoto;
+    private String profilePhoto;
 }

@@ -3,9 +3,9 @@ package scm.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +16,11 @@ import scm.service.SecurityCustomUserDetailsService;
 public class SecurityConfig {
 
     @Autowired(required = true)
-    SecurityCustomUserDetailsService UserDetailsService;
+    private SecurityCustomUserDetailsService UserDetailsService;
     
+    @Autowired
+    @Lazy
+    private OAuthenicationSuccessHandler handler;
     // Authentication Provider
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -27,7 +30,11 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     
     }
-    
+    // Password Encoder
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     // Security Configuration specift the Routes
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -44,7 +51,7 @@ public class SecurityConfig {
                 HttpSecurity.formLogin(formLogin ->{
                     formLogin.loginPage("/login")
                             .loginProcessingUrl("/checklogin")
-                            .successForwardUrl("/user/userhome")
+                            .successForwardUrl("/user/home")
                             .failureForwardUrl("/login?error=true")
                             .usernameParameter("email")
                             .passwordParameter("password");
@@ -78,13 +85,14 @@ public class SecurityConfig {
         logoutForm.logoutSuccessUrl("/login?logout=true");
     });
     
-    HttpSecurity.oauth2Login(Customizer.withDefaults());
+    //OAuth Configuration for Google
+    HttpSecurity.oauth2Login(oauth->{
+        oauth.loginPage("/login");
+        oauth.successHandler(handler);
+    });
         return HttpSecurity.build();   
     }
     
     // Password Encoder
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  
 }

@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +23,21 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
+    @Lazy
     PasswordEncoder passwordEncoder;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public User saveUser(User user) {
-        String userId=UUID.randomUUID().toString();
+        // String userId=UUID.randomUUID().toString();
         // user.setUserId(userId);
         
+        if(user.getPassword()==null || user.getPassword().isEmpty() || user.getPassword().isBlank()){
+            user.setPassword("");
+        }
        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoleList(List.of("ROLE_USER"));
+        
         logger.info(user.getProviders().toString());
         return userRepository.save(user);
     }
@@ -71,10 +76,10 @@ public class UserServiceImpl implements UserService {
         userDB.setMiddleName(user.getMiddleName());
         userDB.setProfilePhoto(user.getProfilePhoto());
         userDB.setEnabled(user.isEnabled());
-        userDB.setGmailVerified(user.isGmailVerified());
+        userDB.setEmailVerified(user.isEmailVerified());
         // userDB.phoneVerified(user.isPhoneVerified());
 
-        User updatedUser = userRepository.save(userDB);
+        User updatedUser = userRepository.save(userDB); 
 
         return Optional.of(updatedUser);
     }
@@ -119,7 +124,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmailExist(String email) {
         Optional<User> userDB = userRepository.findUserByEmail(email);
-        return userDB!=null;
+        return userDB.isPresent();
     }
 
     @Override

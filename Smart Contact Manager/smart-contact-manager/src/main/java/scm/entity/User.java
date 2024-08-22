@@ -80,10 +80,10 @@ public class User implements UserDetails{
     
     private String about;
 
-    private byte[] profilePhoto;
+    private String profilePhoto;
 
     @Builder.Default
-    private boolean gmailVerified=false;
+    private boolean emailVerified=false;
 
     @Builder.Default
     @Getter(value = AccessLevel.NONE)

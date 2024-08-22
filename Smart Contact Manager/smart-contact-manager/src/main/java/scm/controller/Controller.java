@@ -1,5 +1,6 @@
 package scm.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import scm.entity.User;
 import scm.form.ContactForm;
 import scm.form.LoginForm;
-import scm.form.UserRegistration;
 import scm.form.UserRegistrationForm;
 import scm.helper.Message;
 import scm.helper.MessageType;
@@ -44,7 +44,7 @@ public class Controller {
     @GetMapping("/signup")
     public String userSignup(Model model) {
 
-        model.addAttribute("userRegistration", new UserRegistration());
+        model.addAttribute("userRegistration", new UserRegistrationForm());
         return "signup";
     }
 
@@ -120,7 +120,7 @@ public class Controller {
                 user.setContact1(userReg.getContact1());
                 user.setContact2(userReg.getContact2());
                 user.setProfilePhoto(userReg.getProfilePhoto());
-
+                user.setRoleList(List.of("ROLE_USER"));
                 userService.saveUser(user);
 
                 // Success message
@@ -166,7 +166,7 @@ public class Controller {
                             .build();
 
                     session.setAttribute("message", message);
-                    return new String("/user/userhome");
+                    return new String("/user/home");
                 } else {
                     // Password is incorrect, display an error message
                     Message message = Message.builder()

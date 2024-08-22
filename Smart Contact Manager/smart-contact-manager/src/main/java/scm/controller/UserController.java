@@ -23,10 +23,10 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     // User -Home
-    @GetMapping("/user/userhome")
+    @GetMapping("/user/home")
     public String userDashboard() {
         logger.info("THis is User Home..");
-        return new String("user/userhome");
+        return new String("user/home");
     }
 
     // Delete Contact
@@ -51,7 +51,7 @@ public class UserController {
     // User Profile
     @GetMapping("/user/profile")
     public String userProfile() {
-        return new String("user/userprofile");
+        return new String("user/profile");
     }
 
     // Contact Profile
