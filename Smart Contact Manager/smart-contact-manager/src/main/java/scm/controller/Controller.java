@@ -166,6 +166,7 @@ public class Controller {
                             .build();
 
                     session.setAttribute("message", message);
+                    
                     return new String("/user/home");
                 } else {
                     // Password is incorrect, display an error message
@@ -195,6 +196,7 @@ public class Controller {
                     .build();
 
             session.setAttribute("message", message);
+            
             return "redirect:/login";
         }
     }
