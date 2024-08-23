@@ -142,6 +142,6 @@ public class OAuthenicationSuccessHandler implements AuthenticationSuccessHandle
         }
 
         // Redirect to the user's profile page after successful authentication
-        new DefaultRedirectStrategy().sendRedirect(request, response, "/user/home");
+        new DefaultRedirectStrategy().sendRedirect(request, response, "/user/dashboard");
     }
 }

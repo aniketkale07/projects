@@ -167,7 +167,7 @@ public class Controller {
 
                     session.setAttribute("message", message);
                     
-                    return new String("/user/home");
+                    return new String("/user/dashboard");
                 } else {
                     // Password is incorrect, display an error message
                     Message message = Message.builder()
@@ -176,7 +176,7 @@ public class Controller {
                             .build();
 
                     session.setAttribute("message", message);
-                    return new String("/login");
+                    return new String("login");
                 }
             } else {
                 // User does not exist, display an error message

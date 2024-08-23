@@ -1,5 +1,8 @@
 package scm.controller;
 
+import java.security.Principal;
+
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import scm.form.AddContactForm;
 import scm.form.ResetForm;
 import scm.service.UserService;
 
+
 @Controller
 public class UserController {
 
@@ -23,45 +27,54 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     // User -Home
-    @GetMapping("/user/home")
-    public String userDashboard() {
-        logger.info("THis is User Home..");
-        return new String("user/home");
+    @GetMapping("user/dashboard")
+    public String userDashboard(Model model, Principal principal) {
+        String username = principal.getName().toString();
+        
+        logger.info(username);
+        
+        System.out.println("\nTHe VALUE OF USERNAME IS \n"+username);
+        
+        Optional<User> user = userService.findUserByEmail(username);
+
+        return "/user/dashboard";
+    
     }
+    
 
     // Delete Contact
-    @GetMapping("/user/deletecontact")
+    @GetMapping("user/deletecontact")
     public String deleteContact(Model model) {
         return "user/deletecontact";
     }
 
     // Add Contact
-    @GetMapping("/user/addcontact")
+    @GetMapping("user/addcontact")
     public String addContact(Model model) {
         model.addAttribute("addContact", new AddContactForm());
         return "user/addcontact";
     }
 
     // Display Contact
-    @GetMapping("/user/displaycontact")
+    @GetMapping("user/displaycontact")
     public String displayContact() {
         return new String("user/displaycontact");
     }
 
     // User Profile
-    @GetMapping("/user/profile")
+    @GetMapping("user/profile")
     public String userProfile() {
         return new String("user/profile");
     }
 
     // Contact Profile
-    @GetMapping("/user/contactprofile")
+    @GetMapping("user/contactprofile")
     public String contactProfile() {
         return new String("user/contactProfile");
     }
 
     // Add Contact to DB
-    @PostMapping("/user/addContactDB")
+    @PostMapping("user/addContactDB")
     public String addContactToDataBase(@ModelAttribute("addContact") AddContactForm addContact) {
         System.out.println(addContact);
         return null;
@@ -75,14 +88,14 @@ public class UserController {
     // ----> 4.update the password in database
     // ----> 5.redirect the user to login page for login with new passwordd
 
-    @GetMapping("/user/forgetpassword")
+    @GetMapping("user/forgetpassword")
     public String forgetPassword(Model model) {
         return new String("forgetpassword");
     }
 
     // Controller for the Reset password
     // ------> it chage the password from database
-    @PostMapping("/resetPassword")
+    @PostMapping("resetPassword")
     public String resetPassword(@ModelAttribute("resetForm") ResetForm resetForm, HttpSession session) {
 
         // lets User is Logged user in System
