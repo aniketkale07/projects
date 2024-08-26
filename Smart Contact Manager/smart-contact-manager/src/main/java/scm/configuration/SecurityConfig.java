@@ -3,10 +3,8 @@ package scm.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,9 +16,8 @@ public class SecurityConfig {
     @Autowired(required = true)
     private SecurityCustomUserDetailsService UserDetailsService;
     
-    @Autowired
-    @Lazy
-    private OAuthenicationSuccessHandler handler;
+    @Autowired(required = true)
+    private OAuthenicationSuccessLoginHandler oAuthenicationSuccessLoginHandler;
     // Authentication Provider
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -51,7 +48,7 @@ public class SecurityConfig {
                 HttpSecurity.formLogin(formLogin ->{
                     formLogin.loginPage("/login")
                             .loginProcessingUrl("/checklogin")
-                            .successForwardUrl("/user/dashboard")
+                            .successForwardUrl("/user/profile")
                             .failureForwardUrl("/login?error=true")
                             .usernameParameter("email")
                             .passwordParameter("password");
@@ -79,20 +76,34 @@ public class SecurityConfig {
             // });
     });
     
-    HttpSecurity.csrf(AbstractHttpConfigurer::disable);
+    // HttpSecurity.csrf(AbstractHttpConfigurer::disable);
     HttpSecurity.logout(logoutForm->{
         logoutForm.logoutUrl("/logout");
+        logoutForm.invalidateHttpSession(true);
+        logoutForm.deleteCookies("JSESSIONID");
         logoutForm.logoutSuccessUrl("/login?logout=true");
+        // logoutForm.logoutSuccessHandler(null);
     });
     
     //OAuth Configuration for Google
     HttpSecurity.oauth2Login(oauth->{
         oauth.loginPage("/login");
-        oauth.successHandler(handler);
+        oauth.successHandler(oAuthenicationSuccessLoginHandler);
     });
+
+    HttpSecurity.logout(logoutForm->{
+        logoutForm.logoutUrl("/logout");
+        
+        // logoutForm.invalidateHttpSession(true);
+        // logoutForm.deleteCookies("JSESSIONID");
+        logoutForm.logoutSuccessUrl("/login?logout=true");
+        // // logoutForm.logoutSuccessHandler(logoutHandler);
+        // logoutForm.logoutSuccessHandler(null);
+    });
+
         return HttpSecurity.build();   
     }
-    
+
     // Password Encoder
   
 }

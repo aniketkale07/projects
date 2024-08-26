@@ -7,7 +7,6 @@ import java.util.Optional;
 import scm.entity.Contact;
 import scm.entity.User;
 
-
 public interface UserService {
     // Save User
     User saveUser(User user);
@@ -15,12 +14,13 @@ public interface UserService {
     // Get User by Id
     Optional<User> getUserById(Long userId);
 
-//  check for duplicate email . -> to Avoid duplicate email
-boolean isEmailExist(String email);
-boolean isUserExist(long userId);
+    // check for duplicate email . -> to Avoid duplicate email
+    boolean isEmailExist(String email);
 
-//Get User BY Gmail
-Optional<User> findUserByEmail(String email);
+    boolean isUserExist(long userId);
+
+    // Get User BY Gmail
+    User findUserByEmail(String email);
 
     // Display All User
     List<User> getAllUsers();
@@ -33,21 +33,21 @@ Optional<User> findUserByEmail(String email);
 
     // Methods for the Contact
 
-    // Save Contact
-    void saveContact(Contact contact);
+    // // Save Contact
+    // void saveContact(Contact contact);
 
-    // Get Single Contact
-    Contact getContact(Long contactId);
+    // // Get Single Contact
+    // Contact getContact(Long contactId);
 
-    // Update Contact
-    Contact updateContact(Contact contact);
+    // // Update Contact
+    // Contact updateContact(Contact contact);
 
-    // Delete Contact
-    Contact deleteContact(Contact contact);
+    // // Delete Contact
+    // Contact deleteContact(Contact contact);
 
-    // Add Contact
-    Contact addContact(Contact contact);
+    // // Add Contact
+    // Contact addContact(Contact contact);
 
     // Display All Contact
-    List<Contact> displayAllContact(Long userId);
+    // List<Contact> displayAllContact(Long userId);
 }

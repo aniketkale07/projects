@@ -24,7 +24,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @Builder
 public class Contact {
     @Id
@@ -34,10 +33,10 @@ public class Contact {
     @Column(nullable=false)
     private String name;
 
-    private String contact1;
-    private String contact2;
+    private String primaryContact;
+    private String secondaryContact;
     
-private String gmail;
+private String email;
 @Column(length=1000)
     private String about;
     private byte[] profilePhoto;

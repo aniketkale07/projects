@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="parent(content, title, script)" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-th-replace="${title}">Document</title>
+
+    <!-- Output css Link -->
+    <link rel="stylesheet" data-th-href="@{/css/output.css}">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" data-th-href="@{/css/style.css}">
+
+</head>
+
+<body>
+    <!-- Navbar section -->
+
+    <div data-th-replace="~{navbar :: default-navbar}"></div>
+
+    <div  class="grid grid-cols-4 h-screen m-0">
+        <!-- Navbar (Sidebar) -->
+        <div class="col-span-1 bg-gray-800 text-white p-4">
+            <div data-th-replace="~{navbar :: user-sidebar}"></div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div  class="col-span-3 flex flex-col  ">
+            
+            <section class="flex-grow p-4" data-th-replace="${content}"></section>
+            <footer class="bg-gray-200 p-4" data-th-replace="~{footer :: footer}"></footer>
+        </div>
+    </div>
+    
+
+
+
+
+
+    <!-- Footer section -->
+
+    <script data-th-replace="${script}">
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+</body>
+
+</html>

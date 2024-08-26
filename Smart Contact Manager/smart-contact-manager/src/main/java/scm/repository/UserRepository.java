@@ -12,5 +12,5 @@ import scm.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
-   Optional<User> findUserByEmail(String email);
+   User findUserByEmail(String email);
 } 

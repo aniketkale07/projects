@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import scm.entity.Contact;
 import scm.entity.User;
-import scm.helper.ResourceNotFoundException;
+import scm.exception.ResourceNotFoundException;
 import scm.repository.UserRepository;
 
 @Service
@@ -32,12 +32,12 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         // String userId=UUID.randomUUID().toString();
         // user.setUserId(userId);
-        
-        if(user.getPassword()==null || user.getPassword().isEmpty() || user.getPassword().isBlank()){
+
+        if (user.getPassword() == null || user.getPassword().isEmpty() || user.getPassword().isBlank()) {
             user.setPassword("");
         }
-       user.setPassword(passwordEncoder.encode(user.getPassword()));
-        
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         logger.info(user.getProviders().toString());
         return userRepository.save(user);
     }
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     // Find User by Email
     @Override
-    public Optional<User> findUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> updateUser(User user) {
         User userDB = userRepository.findById(user.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        
+
         userDB.setFirstName(user.getFirstName());
         userDB.setLastName(user.getLastName());
         userDB.setEmail(user.getEmail());
@@ -79,52 +79,54 @@ public class UserServiceImpl implements UserService {
         userDB.setEmailVerified(user.isEmailVerified());
         // userDB.phoneVerified(user.isPhoneVerified());
 
-        User updatedUser = userRepository.save(userDB); 
+        User updatedUser = userRepository.save(userDB);
 
         return Optional.of(updatedUser);
     }
 
     @Override
     public void deleteUserById(Long userId) {
-        userRepository.delete(userRepository.findById(userId).orElseThrow());
+        userRepository.delete(userRepository.findById(userId)
+                .orElseThrow(() ->
+                 new ResourceNotFoundException("User Not Found with this " + userId)));
     }
 
-    @Override
-    public void saveContact(Contact contact) {
-        throw new UnsupportedOperationException("Unimplemented method 'saveContact'");
-    }
+    // @Override
+    // public void saveContact(Contact contact) {
+    //     throw new UnsupportedOperationException("Unimplemented method 'saveContact'");
+    // }
 
-    @Override
-    public Contact getContact(Long contactId) {
-        throw new UnsupportedOperationException("Unimplemented method 'getContact'");
-    }
+    // @Override
+    // public Contact getContact(Long contactId) {
+    //     throw new UnsupportedOperationException("Unimplemented method 'getContact'");
+    // }
 
-    @Override
-    public Contact updateContact(Contact contact) {
-        throw new UnsupportedOperationException("Unimplemented method 'updateContact'");
-    }
+    // @Override
+    // public Contact updateContact(Contact contact) {
+    //     throw new UnsupportedOperationException("Unimplemented method 'updateContact'");
+    // }
 
-    @Override
-    public Contact deleteContact(Contact contact) {
-        throw new UnsupportedOperationException("Unimplemented method 'deleteContact'");
-    }
+    // @Override
+    // public Contact deleteContact(Contact contact) {
+    //     throw new UnsupportedOperationException("Unimplemented method 'deleteContact'");
+    // }
 
-    @Override
-    public Contact addContact(Contact contact) {
-        return contact;
-    }
+    // @Override
+    // public Contact addContact(Contact contact) {
+    //     return contact;
+    // }
 
-    @Override
-    public List<Contact> displayAllContact(Long userId) {
-        User user=userRepository.findById(userId).orElseThrow();
-        List<Contact> contact =user.getContact();
-        return contact;
-    }
+    // @Override
+    // public List<Contact> displayAllContact(Long userId) {
+    //     User user = userRepository.findById(userId).orElseThrow();
+    //     List<Contact> contact = user.getContact();
+    //     return contact;
+    // }
 
     @Override
     public boolean isEmailExist(String email) {
-        Optional<User> userDB = userRepository.findUserByEmail(email);
-        return userDB.isPresent();
+    User userDB = userRepository.findUserByEmail(email);
+        return userDB != null ? true : false;
     }
 
     @Override

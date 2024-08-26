@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base-template::parent(~{::#content},~{::title},~{::script})}"
+<html lang="en" th:replace="~{user-base-template::parent(~{::#content},~{::title},~{::script})}"
   xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>About Us</title>
-  <!-- Tailwind CSS CDN -->
+    <title>User Home</title>
 </head>
-
 <body>
+    <form id="content" method="post" data-th-action="@{'/deleteContact'}" class="mt-20 pt-6  flex justify-center "  >
+<div class=" max-w-sm max-h-screen border border-black grid grid-flow-row p-5 mb-4">
 
-  <section id="content">
-    <h4>this is addcontact</h4>
-  </section>
-  <script>
-
-  </script>
+    <label for="contact-id" class="mb-3">Contact ID: </label>
+    <input type="text" name="contact-id" class="mb-3" id="">
+    <button type="submit" class="border p-2 block font-semibold text-white bg-green-700  hover:bg-green-900">Delete Contact</button>
+</div>
+    </form>
+    <script>
+       
+    </script>
 </body>
+</html>

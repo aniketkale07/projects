@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base-template::parent(~{::#content},~{::title},~{::script})}"
+<html lang="en" th:replace="~{user-base-template::parent(~{::#content},~{::title},~{::script})}"
   xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>About Us</title>
-  <!-- Tailwind CSS CDN -->
+    <title>Contact Profile</title>
 </head>
-
 <body>
+    <section id="content">
 
-  <section id="content">
-    <h4>this is addcontact</h4>
-  </section>
-  <script>
-
-  </script>
+        <p>Email: email@example.com</p>
+       
+    </section>
+    <script>
+       console.log(localStorage.log);
+    </script>
 </body>
+</html>

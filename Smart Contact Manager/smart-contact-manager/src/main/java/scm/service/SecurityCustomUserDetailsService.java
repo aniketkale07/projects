@@ -6,9 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import scm.helper.ResourceNotFoundException;
-
-import java.util.Optional;
 import scm.repository.UserRepository;
 
 @Service
@@ -20,8 +17,12 @@ public class SecurityCustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // TODO Auto-generated method stub
-       return userRepository.findUserByEmail(username)
-       .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        scm.entity.User user =userRepository.findUserByEmail(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+            }
+            return user;
+       
     }
     
 }

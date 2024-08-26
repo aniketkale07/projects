@@ -1,5 +1,8 @@
 package scm.form;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,11 +19,15 @@ import lombok.ToString;
 @Builder
 public class AddContactForm {
     
+    
+
+
     @NotNull
     private String name;
-    private String contact1;
-    private String contact2;
-    private String gmail;
+    @NotBlank
+    private String primaryContact;
+    private String secondaryContact;
+    private String email;
     private String about;
     private byte[] profilePhoto;
 

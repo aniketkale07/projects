@@ -90,13 +90,13 @@ public class Controller {
         // Create new User
 
         String email = userReg.getEmail().strip();
-        Optional<User> dbUser;
+        User dbUser;
         // Retrieve user from DB
         try {
 
             dbUser = userService.findUserByEmail(email);
 
-            if (dbUser.isPresent()) {
+            if (dbUser!=null) {
                 // User already exists, set error message
                 Message message = Message.builder()
                         .content("Invalid Email: User already exists")
@@ -153,12 +153,12 @@ public class Controller {
 
         try {
             // 1. Check if the user exists in the database
-            Optional<User> user = userService.findUserByEmail(email);
+            User user = userService.findUserByEmail(email);
 
-            if (user.isPresent()) {
+            if (user!=null) {
                 // 2. Check if the password is correct
                 // Use a secure method to compare passwords (assuming passwords are hashed)
-                if (passwordEncoder.matches(password, user.get().getPassword())) {
+                if (passwordEncoder.matches(password, user.getPassword())) {
                     // Login successful, redirect to the dashboard
                     Message message = Message.builder()
                             .content("Login Successfully")
@@ -166,7 +166,7 @@ public class Controller {
                             .build();
 
                     session.setAttribute("message", message);
-                    
+                    session.setAttribute("user", user);
                     return new String("/user/dashboard");
                 } else {
                     // Password is incorrect, display an error message

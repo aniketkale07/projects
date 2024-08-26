@@ -1,47 +1,41 @@
 package scm.controller;
 
-import java.security.Principal;
-
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import jakarta.servlet.http.HttpSession;
+import scm.entity.Contact;
 import scm.entity.User;
 import scm.form.AddContactForm;
 import scm.form.ResetForm;
 import scm.service.UserService;
 
-
 @Controller
 public class UserController {
 
-    @Autowired
+    @Autowired(required = true)
     UserService userService;
+
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     // User -Home
-    @GetMapping("user/dashboard")
-    public String userDashboard(Model model, Principal principal) {
-        String username = principal.getName().toString();
-        
-        logger.info(username);
-        
-        System.out.println("\nTHe VALUE OF USERNAME IS \n"+username);
-        
-        Optional<User> user = userService.findUserByEmail(username);
-
+    @GetMapping("/user/dashboard")
+    public String userDashboard() {
+       
         return "/user/dashboard";
-    
     }
     
-
     // Delete Contact
     @GetMapping("user/deletecontact")
     public String deleteContact(Model model) {
@@ -49,7 +43,7 @@ public class UserController {
     }
 
     // Add Contact
-    @GetMapping("user/addcontact")
+    @RequestMapping( value="user/addcontact")
     public String addContact(Model model) {
         model.addAttribute("addContact", new AddContactForm());
         return "user/addcontact";
@@ -58,26 +52,44 @@ public class UserController {
     // Display Contact
     @GetMapping("user/displaycontact")
     public String displayContact() {
-        return new String("user/displaycontact");
+        return "user/displaycontact";
     }
 
     // User Profile
     @GetMapping("user/profile")
     public String userProfile() {
-        return new String("user/profile");
+        return "user/profile";
     }
 
     // Contact Profile
     @GetMapping("user/contactprofile")
     public String contactProfile() {
-        return new String("user/contactProfile");
+        return "user/contactprofile";
     }
 
     // Add Contact to DB
     @PostMapping("user/addContactDB")
-    public String addContactToDataBase(@ModelAttribute("addContact") AddContactForm addContact) {
-        System.out.println(addContact);
-        return null;
+    public String addContactToDataBase( @ModelAttribute("addContact") AddContactForm addContact) {
+        System.out.println("new Contact is saving....");
+        
+        Contact contact=new Contact();
+        try {
+            
+        contact.setEmail(addContact.getEmail() != null ? addContact.getEmail() : "");
+        contact.setName(addContact.getName() !=null ? addContact.getName() : "");
+        contact.setPrimaryContact(addContact.getPrimaryContact() != null ? addContact.getPrimaryContact() : "");
+        contact.setSecondaryContact(addContact.getSecondaryContact() != null ? addContact.getSecondaryContact() : "");
+        contact.setAbout(addContact.getAbout()!= null ? addContact.getAbout() : "");
+    
+
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            e.printStackTrace();
+
+        }
+        System.out.println(contact);
+        return "redirect:/user/dashboard";
     }
 
     // Forget Password
@@ -90,12 +102,13 @@ public class UserController {
 
     @GetMapping("user/forgetpassword")
     public String forgetPassword(Model model) {
-        return new String("forgetpassword");
+        model.addAttribute("resetForm", new ResetForm());
+        return "user/forgetpassword";
     }
 
     // Controller for the Reset password
     // ------> it chage the password from database
-    @PostMapping("resetPassword")
+    @PostMapping("/resetPassword")
     public String resetPassword(@ModelAttribute("resetForm") ResetForm resetForm, HttpSession session) {
 
         // lets User is Logged user in System
@@ -111,14 +124,14 @@ public class UserController {
         String resetEmail = resetForm.getEmail().strip();
         String resetPassword = resetForm.getPassword().strip();
 
-        if (resetEmail != dbEmail) {
+        if (!resetEmail.equals(dbEmail)) {
             System.out.println("Email is Invalid ..");
             return "redirect:/forgetpassword";
         } else {
             String dbPassword = user.getPassword();
 
             // -----> check the dbPassword is match
-            if (dbPassword == resetPassword) {
+            if (dbPassword.equals(resetPassword)) {
                 return "redirect:/forgetpassword";
             } else {
                 user.setPassword(resetPassword); // update DB password to reset Form Password
