@@ -1,12 +1,13 @@
 package scm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import scm.entity.Contact;
 
 public interface ContactService {
 
-    void addContact(Contact contact);
+    
     void updateContact(Contact Contact);
     void deleteContact(long contactId);
     List<Contact> displayAllContact(Long userId);
@@ -14,6 +15,6 @@ public interface ContactService {
     void saveContact(Contact contact);
 
     // // Get Single Contact
-    Contact getContact(Long contactId);
+    Optional<Contact> getContact(Long contactId);
     
 }
