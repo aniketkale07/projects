@@ -39,8 +39,6 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 @Builder
 public class User implements UserDetails{
 

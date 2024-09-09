@@ -1,41 +1,46 @@
 package scm.controller;
 
-import java.util.Optional;
+import java.security.Principal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 import scm.entity.Contact;
 import scm.entity.User;
-import scm.form.AddContactForm;
 import scm.form.ResetForm;
+import scm.helper.Helper;
+import scm.helper.Message;
+import scm.helper.MessageType;
+import scm.service.ContactService;
 import scm.service.UserService;
 
 @Controller
 public class UserController {
 
-    @Autowired(required = true)
-    UserService userService;
+    @Autowired
+    private UserService userService;
 
+    @Autowired
+    private ContactService contactService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    // User -Home
+    // User Dashboard
     @GetMapping("/user/dashboard")
     public String userDashboard() {
-       
         return "/user/dashboard";
     }
-    
+
     // Delete Contact
     @GetMapping("user/deletecontact")
     public String deleteContact(Model model) {
@@ -43,9 +48,9 @@ public class UserController {
     }
 
     // Add Contact
-    @RequestMapping( value="user/addcontact")
+    @GetMapping("user/addcontact")
     public String addContact(Model model) {
-        model.addAttribute("addContact", new AddContactForm());
+        model.addAttribute("addContact", new Contact());
         return "user/addcontact";
     }
 
@@ -68,74 +73,94 @@ public class UserController {
     }
 
     // Add Contact to DB
-    @PostMapping("user/addContactDB")
-    public String addContactToDataBase( @ModelAttribute("addContact") AddContactForm addContact) {
-        System.out.println("new Contact is saving....");
-        
-        Contact contact=new Contact();
+    @PostMapping("/user/addContactDB")
+    public String addContactToDataBase(
+            @ModelAttribute("addContact") Contact addContact,
+            Authentication authentication,
+            HttpSession session) {
+
         try {
-            
-        contact.setEmail(addContact.getEmail() != null ? addContact.getEmail() : "");
-        contact.setName(addContact.getName() !=null ? addContact.getName() : "");
-        contact.setPrimaryContact(addContact.getPrimaryContact() != null ? addContact.getPrimaryContact() : "");
-        contact.setSecondaryContact(addContact.getSecondaryContact() != null ? addContact.getSecondaryContact() : "");
-        contact.setAbout(addContact.getAbout()!= null ? addContact.getAbout() : "");
-    
+            // Get authenticated user's email
+            String email = Helper.getLoggedUserEmail(authentication);
+
+            if (email == null) {
+                // Handle the case where authentication.getName() returns null
+                // For example, redirect to login page or return an error message
+                return "redirect:/login";
+            }
+
+            User user = userService.findUserByEmail(email);
+
+            if (user == null) {
+                // Handle the case where user is not found
+                // For example, return an error message
+                Message message = Message.builder()
+                        .content("User not found" + email)
+                        .type(MessageType.red)
+                        .build();
+                session.setAttribute("message", message);
+                return "redirect:/user/addcontact";
+            }
+
+            // Create a new Contact and populate fields
+            addContact.setUser(user); // Associate the contact with the user
+
+            // Save the contact in the DB
+            contactService.saveContact(addContact);
+
+            // Log the contact save action
+            logger.info("Contact saved for user: {}", user.getEmail());
+            Message message = Message.builder()
+                    .content("Contact added successfully")
+                    .type(MessageType.green)
+                    .build();
+            session.setAttribute("message", message);
 
         } catch (Exception e) {
-            // TODO: handle exception
-
-            e.printStackTrace();
-
+            logger.error("Error saving contact", e);
+            Message message = Message.builder()
+                    .content(e + "Error adding contact. Please try again.")
+                    .type(MessageType.red)
+                    .build();
+            session.setAttribute("message", message);
         }
-        System.out.println(contact);
-        return "redirect:/user/dashboard";
+
+        return "redirect:/user/addcontact";
     }
 
-    // Forget Password
-    // ----> 1. check user is validated
-    // ----> 2.check the new Password is same or different
-    // ----->3. if password is same Warn the user and say for the change the
-    // password
-    // ----> 4.update the password in database
-    // ----> 5.redirect the user to login page for login with new passwordd
-
+    // Forget Password Handler
     @GetMapping("user/forgetpassword")
-    public String forgetPassword(Model model) {
+    public String forgetPassword(Model model, Authentication authentication) {
         model.addAttribute("resetForm", new ResetForm());
         return "user/forgetpassword";
     }
 
-    // Controller for the Reset password
-    // ------> it chage the password from database
+    // Reset Password
     @PostMapping("/resetPassword")
-    public String resetPassword(@ModelAttribute("resetForm") ResetForm resetForm, HttpSession session) {
+    public String resetPassword(
+            @ModelAttribute("resetForm") ResetForm resetForm,
+            HttpSession session,
+            Authentication authentication) {
 
-        // lets User is Logged user in System
-        // get email from logged user account
-        // check the email is valid or not i.e DBEMAIL and RESETFORM email are equal
-        // get user password from that valid user email and check it remail same or not
-        // if both are same then ==> warn about same password
-        // change the database value
-        User user = new User(); // This User is getting Temparory Purpose
-
+        String authName = authentication.getName();
+        User user = userService.findUserByEmail(authName);
         String dbEmail = user.getEmail();
-
         String resetEmail = resetForm.getEmail().strip();
         String resetPassword = resetForm.getPassword().strip();
 
         if (!resetEmail.equals(dbEmail)) {
-            System.out.println("Email is Invalid ..");
+            logger.error("Email is Invalid");
             return "redirect:/forgetpassword";
         } else {
             String dbPassword = user.getPassword();
 
-            // -----> check the dbPassword is match
+            // Check if the new password is the same as the old one
             if (dbPassword.equals(resetPassword)) {
+                logger.error("New Password is the same as the old one");
                 return "redirect:/forgetpassword";
             } else {
-                user.setPassword(resetPassword); // update DB password to reset Form Password
-                // userService.saveUser(user);
+                user.setPassword(resetPassword); // Update DB password to resetForm's password
+                userService.saveUser(user);
             }
         }
         return "redirect:/login";

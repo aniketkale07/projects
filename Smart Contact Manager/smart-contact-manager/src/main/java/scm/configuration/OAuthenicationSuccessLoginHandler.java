@@ -1,16 +1,22 @@
 package scm.configuration;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+
+import com.nimbusds.oauth2.sdk.auth.JWTAuthentication;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import scm.entity.Providers;
 import scm.entity.User;
 import scm.helper.AppConstants;
+import scm.service.SecurityCustomUserDetailsService;
 import scm.service.UserService;
 
 @Component
@@ -35,7 +42,24 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
             Authentication authentication)
             throws IOException, ServletException {
 
-        logger.info("OAuthenicationSuccessHandler");
+        logger.info("------------------OAuthenicationSuccessHandler-------------------");
+
+
+        // --------------------the code is not working -------------------------
+      // For the O2AuthUser
+      if(authentication instanceof UsernamePasswordAuthenticationToken){
+        UsernamePasswordAuthenticationToken token =(UsernamePasswordAuthenticationToken) authentication;
+        UserDetails userDetails = (UserDetails)token.getPrincipal();
+
+        String email= userDetails.getUsername();
+        User user2 =userService.findUserByEmail(email);
+        if(user2!=null){
+            new DefaultRedirectStrategy().sendRedirect(request, response, "/user/dashboard");
+        }
+    }
+     
+      // --------------------the code is not working above -------------------------
+
 
         // Cast the authentication object to OAuth2AuthenticationToken
         OAuth2AuthenticationToken oAuth2AuthenticationToken = (OAuth2AuthenticationToken) authentication;
@@ -44,7 +68,7 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
         String authorizedClientRegistrationId = oAuth2AuthenticationToken.getAuthorizedClientRegistrationId();
 
         // Print the authorized client registration ID to the console
-        System.out.println(authorizedClientRegistrationId);
+        System.out.println("Here is the Authorize client registration id  :"+authorizedClientRegistrationId);
 
         DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
 
@@ -52,6 +76,8 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
 
         // Print Authentication User getting from the at the time of logged
 
+        System.out.println("Start of attributes.");
+        
         oAuth2User.getAttributes().forEach((key, value) -> {
         System.out.println(key + " : " + value);
         });
@@ -92,8 +118,10 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
                 userService.saveUser(user);
             }
 
-            // --------------GITHUB ----------------
-        } else if (authorizedClientRegistrationId.equalsIgnoreCase("github")) {
+           
+        } 
+   // --------------GITHUB ----------------      
+        else if (authorizedClientRegistrationId.equalsIgnoreCase("github")) {
             String email = oAuth2User.getAttribute("email") != null ? 
             oAuth2User.getAttribute("email").toString() :
             (oAuth2User.getAttribute("login").toString() + "@github.com");
@@ -132,17 +160,19 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
                 }
                 user.setAbout(oAuth2User.getAttribute("bio") != null ? oAuth2User.getAttribute("bio").toString() : "");
 
-                System.out.println(user);
+              
                 userService.saveUser(user);
             }
 
-        } else if (authorizedClientRegistrationId.equalsIgnoreCase("facebook")) {
-            // Set Facebook Authentication Code
+        } else{
+            // for non OA2uthUser 
+            UserDetails userDetails = (UserDetails)authentication.getPrincipal();            
+            String email =userDetails.getUsername();
 
-        } else {
-            
-            // Set Default Authentication Code
+            User user2 = userService.findUserByEmail(email);
         }
+
+       
 
         // Redirect to the user's profile page after successful authentication
         new DefaultRedirectStrategy().sendRedirect(request, response, "/user/dashboard");

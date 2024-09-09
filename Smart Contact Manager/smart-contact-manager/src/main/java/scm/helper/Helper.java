@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public class Helper {
 
+    // this method help to you find logged user email
     public static String getLoggedUserEmail(Authentication authentication) {
 
         if (authentication == null) {
