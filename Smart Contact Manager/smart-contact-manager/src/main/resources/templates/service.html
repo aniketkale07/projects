@@ -9,7 +9,7 @@
 
 <body class="bg-gray-100 dark:bg-gray-900">
 
-  <section id="content" class="container mx-auto p-6 mt-20 py-2">
+  <section id="content" data-th-fragment="service" class="container mx-auto p-6 mt-20 py-2">
 
 
     <div class="text-center  ">
@@ -21,12 +21,18 @@
       <a href="#"
         class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <img class="object-cover w-full rounded-t-lg h-48 md:h-64 lg:h-80"
-          src="https://images.freeimages.com/images/large-previews/39a/spring-1377434.jpg?fmt=webp&h=350" alt="">
+          src="https://img.freepik.com/free-vector/mobile-encryption-concept-illustration_114360-5004.jpg?t=st=1726069508~exp=1726073108~hmac=5386042f04a88faf7e1029c738b2195190fb33395d27a54e0bc27a45aaff8dbc&w=740" alt="">
         <div class="flex flex-col justify-between p-4 leading-normal">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology
-            acquisitions 2021</h5>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
-            acquisitions of 2021 so far, in reverse chronological order.</p>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"> Secure User Authentication
+            </h5>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <span class="h-3 font-semibold"> Description:</span> Robust authentication using OAuth2, enabling secure login through Google, Facebook, and GitHub accounts.
+            <ul> <span class="h-3 font-semibold">Features:</span>
+            
+            <li>OAuth2-based login.</li>
+            <li>Password encryption for enhanced security.</li>
+            <li>Logout handling with session and cache clearance..</li>
+          </ul>
         </div>
       </a>
 
@@ -34,12 +40,21 @@
       <a href="#"
         class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <img class="object-cover w-full rounded-t-lg h-48 md:h-64 lg:h-80"
-          src="https://images.freeimages.com/images/large-previews/dbd/flower-1400637.jpg?fmt=webp&h=350" alt="">
+          src="https://img.freepik.com/free-vector/isometric-hiring-illustration_23-2148100129.jpg?t=st=1726069597~exp=1726073197~hmac=3c300162869c5752b561ba2d1daf00807389a20cfe264926a3cd36cd2961b38b&w=740" alt="">
         <div class="flex flex-col justify-between p-4 leading-normal">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology
-            acquisitions 2021</h5>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
-            acquisitions of 2021 so far, in reverse chronological order.</p>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Profile Customization
+            </h5>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <span class="h-3 font-semibold"> Description:</span>
+             Personalize user profiles by allowing profile picture uploads, detailed information updates, and quick access to important contact information.
+            <ul>  <span class="h-3 font-semibold">Features:</span>
+              
+            
+<li>User profile management.</li>
+<li>Profile photo uploads.</li>
+<li>Editable user information (name, email, social links, etc.).</li>
+          </p>
         </div>
       </a>
 
@@ -47,12 +62,19 @@
       <a href="#"
         class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <img class="object-cover w-full rounded-t-lg h-48 md:h-64 lg:h-80"
-          src="https://images.freeimages.com/images/large-previews/866/butterfly-1-1535829.jpg?fmt=webp&h=350" alt="">
+          src="https://img.freepik.com/free-vector/web-search-concept_52683-63900.jpg?t=st=1726069647~exp=1726073247~hmac=e234609ebf44f4ec4dce98bbb8a60767fca6d4bea2210dfcce54e5bd9ebbe8c7&w=740" alt="">
         <div class="flex flex-col justify-between p-4 leading-normal">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology
-            acquisitions 2021</h5>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
-            acquisitions of 2021 so far, in reverse chronological order.</p>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Advanced Search and Filtering
+             </h5>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+           <span class="h-3 font-semibold"> Description:</span>
+            Powerful search and filter options to quickly locate specific contacts based on various parameters like name, email, or phone number.
+            <ul>  <span class="h-3 font-semibold">Features:</span>
+            <li>Role-based access control.</li>
+              <li>Secure data storage using MySQL and encrypted passwords.</li>
+            </ul>
+          </p>
         </div>
       </a>
 
@@ -61,60 +83,64 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 dark:text-white">
 
       <!-- Small Card 1 -->
-      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div class="  hover:bg-gray-100 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology
-            acquisitions 2021</h5>
+          <img class="object-cover w-full rounded-lg h-48 md:h-64 lg:h-80"
+          src="https://img.freepik.com/free-vector/flat-design-responsive-website-design_23-2149488182.jpg?t=st=1726069887~exp=1726073487~hmac=ca7efef6206ac37d027324a08824e2fb81fb9c8a15deb61f4c0415e57a7ac8ef&w=740" alt="">
+        
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Responsive Design</h5>
         </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
-          acquisitions of 2021 so far, in reverse chronological order.</p>
-        <a href="#"
-          class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Read more
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <span class="h-3 font-semibold"> Description:</span>
+          Access your contact management system on any device with a responsive user interface designed to work seamlessly across desktops, tablets, and mobile devices.
+          <ul>  <span class="h-3 font-semibold">Features:</span>
+         <li>Responsive UI with TailwindCSS.</li>
+            <li>Optimized for different screen sizes.</li>
+        </p>
+       
       </div>
 
       <!-- Small Card 2 -->
-      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div class=" hover:bg-gray-100 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <img class="object-cover w-full rounded-lg h-48 md:h-64 lg:h-80"
+        src="https://img.freepik.com/free-vector/gradient-ssl-illustration_23-2149247155.jpg?t=st=1726070050~exp=1726073650~hmac=e3fe1e1bfb5cc3f2cd48a6ba26a475825504cad90b81fa84fb4283d6824d25a2&w=740" alt="">
+      
         <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology
-            acquisitions 2021</h5>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Data Security & Privacy
+            </h5>
         </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
-          acquisitions of 2021 so far, in reverse chronological order.</p>
-        <a href="#"
-          class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Read more
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <span class="h-3 font-semibold"> Description:</span>
+          Ensure that all user data is protected with end-to-end encryption, and user details are only accessible by authorized individuals.
+          <ul>  <span class="h-3 font-semibold">Features:</span>
+           <li> Role-based access control.</li>
+          <li>Secure data storage using MySQL and encrypted passwords.</li>
+          </ul>
+        </p>
+       
       </div>
 
       <!-- Small Card 3 -->
-      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div class=" hover:bg-gray-100  max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <img class="object-cover w-full rounded-lg h-48 md:h-64 lg:h-80"
+        src="https://img.freepik.com/free-vector/concept-landing-page-connecting-teams_52683-25036.jpg?t=st=1726070227~exp=1726073827~hmac=7ab03e30f78bc49c4d78cb80463e4f4e610e0928e95692281b438174b0842e73&w=740" alt="">
+      
         <a href="#">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology
-            acquisitions 2021</h5>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Team Collaboration</h5>
         </a>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
-          acquisitions of 2021 so far, in reverse chronological order.</p>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <span class="h-3 font-semibold"> Description:</span>
+          Manage multiple users and share contacts across teams to streamline workflow and communication.
+          <ul>  <span class="h-3 font-semibold">Features:</span>
+           <li> Multiple user accounts.</li>
+            <li>Shared contacts between team members.</li>
+          <li>Role management for different user privileges.</li>
+          </ul>
+        </p>
         <a href="#"
-          class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Read more
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </a>
+         
       </div>
 
     </div>

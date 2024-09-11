@@ -54,13 +54,10 @@
             <li>
                <a data-th-href="@{/about}"
                   class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <svg class="h-6 w-6 text-slate-700" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                     <path stroke="none" d="M0 0h24v24H0z" />
-                     <polyline points="5 12 3 12 12 3 21 12 19 12" />
-                     <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                     <rect x="10" y="12" width="4" height="4" />
-                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-11.412a.93.93 0 1 1-1.86 0 .93.93 0 0 1 1.86 0zM8.93 6.588a.5.5 0 0 0-.94 0l-.5 4a.5.5 0 0 0 .5.5h.94a.5.5 0 0 0 .5-.5l-.5-4z"/>
+                   </svg>
+                   
                   <span class="ms-3">about</span>
                </a>
             </li>
@@ -68,26 +65,20 @@
             <li>
                <a data-th-href="@{/service}"
                   class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <svg class="h-6 w-6 text-slate-700" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                     <path stroke="none" d="M0 0h24v24H0z" />
-                     <polyline points="5 12 3 12 12 3 21 12 19 12" />
-                     <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                     <rect x="10" y="12" width="4" height="4" />
-                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                     <path d="M8 1a7 7 0 0 0-1.8 13.7c-.054-.412-.12-.825-.2-1.23C4.9 13.24 3 10.93 3 8a5 5 0 0 1 5-5V1zm-1.8 5.4c0-.29.015-.578.045-.86C5.15 6.222 4.5 7.134 4.5 8c0 .866.65 1.778 1.745 2.46-.03-.282-.045-.57-.045-.86V6.4z"/>
+                     <path d="M11.5 5.2c.015.282.045.57.045.86v2.28c0 .29-.03.578-.045.86C11.35 9.778 12 8.866 12 8c0-.866-.65-1.778-1.745-2.46z"/>
+                   </svg>
+                   
                   <span class="ms-3">Service</span>
                </a>
             </li>
             <li>
                <a data-th-href="@{/contact}"
                   class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <svg class="h-6 w-6 text-slate-700" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                     <path stroke="none" d="M0 0h24v24H0z" />
-                     <polyline points="5 12 3 12 12 3 21 12 19 12" />
-                     <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                     <rect x="10" y="12" width="4" height="4" />
-                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm14 0H2v8h12V4zm-1.48 2.07L8 8.93 3.48 6.07l-.42.61L8 9.67l4.94-3.06-.42-.61z"/>
+                   </svg>
                   <span class="ms-3">Contact</span>
                </a>
             </li>
@@ -141,7 +132,7 @@ aria-controls="navbar-sticky" aria-expanded="false">
                <span class="flex-1 ms-3 whitespace-nowrap">Add Contact</span>
             </a>
          </li>
-         <li>
+         <!-- <li>
             <a data-th-href="@{/user/updatecontact}"
                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                <svg
@@ -152,7 +143,7 @@ aria-controls="navbar-sticky" aria-expanded="false">
                </svg>
                <span class="flex-1 ms-3 whitespace-nowrap">Update Contact</span>
             </a>
-         </li>
+         </li> -->
          <li>
             <a data-th-href="@{/user/deletecontact}"
                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

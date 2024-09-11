@@ -9,8 +9,8 @@ public interface ContactService {
 
     
     void updateContact(Contact Contact);
-    void deleteContact(long contactId);
-    List<Contact> displayAllContact(Long userId);
+    void deleteContact(Contact contact);
+    List<Contact> displayAllContact();
      // // Save Contact
     void saveContact(Contact contact);
 

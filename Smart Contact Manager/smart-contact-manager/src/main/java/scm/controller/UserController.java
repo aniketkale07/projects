@@ -1,6 +1,8 @@
 package scm.controller;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import scm.entity.Contact;
@@ -47,6 +50,34 @@ public class UserController {
         return "user/deletecontact";
     }
 
+    @GetMapping("user/deletecontactDB")
+    public String deleteContactDB(@RequestParam(value = "contactId", required = false) Long contactId,
+            HttpSession session) {
+
+        Contact contactDB = contactService.getContact(contactId).get();
+        if (contactDB == null) {
+            // Handle the case where the contactId is null, for example, return an error
+            // page
+
+            Message message = Message.builder()
+                    .content("Contact not found")
+                    .type(MessageType.red)
+                    .build();
+            session.setAttribute("message", message);
+            return "user/deletecontact"; // Redirect to an appropriate error page or handle accordingly
+        }
+
+        // Proceed with deleting the contact since contactId is not null
+        contactService.deleteContact(contactDB);
+        Message message = Message.builder()
+                .content("Contact deleted Successfully")
+                .type(MessageType.green)
+                .build();
+        session.setAttribute("message", message);
+
+        return "user/deletecontact"; // Return the success page
+    }
+
     // Add Contact
     @GetMapping("user/addcontact")
     public String addContact(Model model) {
@@ -56,7 +87,16 @@ public class UserController {
 
     // Display Contact
     @GetMapping("user/displaycontact")
-    public String displayContact() {
+    public String displayContact(Authentication authentication, Model model) {
+
+        String email = Helper.getLoggedUserEmail(authentication);
+
+        User user = userService.findUserByEmail(email);
+
+        List<Contact> contacts = user.getContact();
+
+        model.addAttribute("contacts", contacts);
+
         return "user/displaycontact";
     }
 
@@ -142,8 +182,8 @@ public class UserController {
             HttpSession session,
             Authentication authentication) {
 
-        String authName = authentication.getName();
-        User user = userService.findUserByEmail(authName);
+        String email = Helper.getLoggedUserEmail(authentication);
+        User user = userService.findUserByEmail(email);
         String dbEmail = user.getEmail();
         String resetEmail = resetForm.getEmail().strip();
         String resetPassword = resetForm.getPassword().strip();
@@ -164,5 +204,11 @@ public class UserController {
             }
         }
         return "redirect:/login";
+    }
+
+    @PostMapping("user/editContact")
+    public String editContact(){
+
+        return null;
     }
 }

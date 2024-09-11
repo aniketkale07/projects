@@ -34,12 +34,13 @@ public class Contact {
     private String name;
 
     private String primaryContact;
-    private String secondaryContact;
-    
+   
 private String email;
 @Column(length=1000)
     private String about;
-    private byte[] profilePhoto;
+    private String profilePhoto;
+    private String github;
+    private String linkden;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

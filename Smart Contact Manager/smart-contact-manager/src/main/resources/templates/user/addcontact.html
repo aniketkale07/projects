@@ -8,71 +8,255 @@
 </head>
 
 <body>
-  <form id="content" method="post" data-th-action="@{/user/addContactDB}"  data-th-object="${addContact}"
-  class="mt-20 pt-20 mx-auto max-w-lg md:max-w-2xl lg:max-w-3xl bg-white border rounded-lg shadow-md p-4 sm:p-6 md:p-8 lg:p-10">
+  <section id="content" class="flex items-center justify-center min-h-screen">
 
-  <!------------------ message text ---------------->
-  <div data-th-if="#{session.message}" data-th-replace="~{message :: message}"></div>
-  
-  <!------------- message text --------------------->
+    <form method="post" data-th-action="@{/user/addContactDB}" data-th-object="${addContact}"
+      onsubmit="validateForm(event)" class="mt-20 pt-20 
+  flex-auto  max-w-lg md:max-w-2xl lg:max-w-3xl bg-white border rounded-lg shadow-md p-4 sm:p-6 md:p-8 lg:p-10">
 
-  <!-- Name Field (Single line across all screen sizes) -->
-  <div class="grid gap-6 mb-6">
-    <div class="col-span-full">
-      <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Name</label>
-      <input type="text"
-      data-th-field="*{name}" id="name"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="John" required />
-    </div>
-  </div>
+      <div class=" mt-2  flex justify-center mb-6 ">
+        <h2 class="h-2 font-bold text-xl ">Add New Contact</h2>
+      </div>
 
-  <!-- Contact Fields (Single line on medium screens) -->
-  <div class="grid gap-6 mb-6 sm:grid-cols-1 md:grid-cols-2">
-    <div>
-      <label for="phone1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Primary number</label>
-      <input type="tel" data-th-field="*{PrimaryContact}" id="phone1"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        required />
-    </div>
+      <!------------------ message text ---------------->
+      <div data-th-if="#{session.message}" data-th-replace="~{message :: message}"></div>
 
-    <div>
-      <label for="phone2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Secondary number</label>
-      <input type="tel" data-th-field="*{SecondaryContact}" id="phone2"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        required />
-    </div>
-  </div>
+      <!------------- message text --------------------->
 
-  <div class="mb-6">
-    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
-    <input type="email" id="email" data-th-field="*{email}"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      placeholder="abc@company.com"  />
-  </div>
+      <!-- Name Field (Single line across all screen sizes) -->
+      <div class="mb-6">
+        <!-- Name Input Field with Icon -->
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="name">Name</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <!-- User Icon (Name) -->
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <path
+                d="M12 12c2.209 0 4-1.791 4-4s-1.791-4-4-4-4 1.791-4 4 1.791 4 4 4zm0 2c-2.673 0-8 1.344-8 4v2h16v-2c0-2.656-5.327-4-8-4z" />
+            </svg>
+          </div>
+          <input data-th-field="*{name}"
+            class="block w-full pl-10 p-2.5 text-xs text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 focus:outline-none"
+            id="name" type="text" name="name" placeholder="Enter your name" onmouseleave="validateName('name')">
+          <p class="text-red-500 text-sm font-semibold" id="nameError" style="display: none;">Invalidate name </p>
+        </div>
+      </div>
 
-  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="small_size"> Profile Photo</label>
-  <input data-th-field="*{profilePhoto}"
-    class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-    id="small_size" type="file">
 
-  <div class="flex items-start mb-6">
-    <div class="flex items-center h-5">
-      <input id="remember" type="checkbox" value=""
-        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-        required />
-    </div>
-    <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a
-        href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
-  </div>
+      <!-- Contact Fields (Single line on medium screens) -->
+      <div class=" mb-6 ">
 
-  <button type="submit"
-    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Contact</button>
-</form>
+        <label for="primaryContact" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Primary
+          number</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <!-- Phone Icon -->
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <path
+                d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1.1 1.1 0 011.11-.27c1.2.4 2.5.63 3.8.63.6 0 1.1.49 1.1 1.1v3.4a1.1 1.1 0 01-1.1 1.1C9.37 21.6 2.4 14.63 2.4 5.1A1.1 1.1 0 013.5 4h3.4c.6 0 1.1.49 1.1 1.1 0 1.3.23 2.6.63 3.8.14.41.03.87-.27 1.11l-2.2 2.2z" />
+            </svg>
+          </div>
+          <input type="tel" data-th-field="*{primaryContact}" id="primaryContact"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            oninput="validateContact('primaryContact')" required />
+          <p class="text-red-500 text-sm font-semibold" id="primaryContactError" style="display: none;">Invalid contact
+            number.</p>
+        </div>
+      </div>
 
+      <div class="mb-6">
+        <label for="email" class="block text-sm font-medium text-gray-900
+             dark:text-white mb-2">
+          Email
+        </label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <!-- Email Icon -->
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <path
+                d="M20 4h-16c-1.104 0-2 .896-2 2v12c0 1.104.896 2 2 2h16c1.104 0 2-.896 2-2v-12c0-1.104-.896-2-2-2zm-1.999 2-6.004 5-6.004-5h12.008zm-14.001 12v-10l7.001 5.5 7.001-5.5v10h-14.002z" />
+            </svg>
+          </div>
+          <input type="email" id="email" data-th-field="*{email}"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="abc@company.com" oninput="validateEmail()" required />
+          <p class="text-red-500 text-sm font-semibold" id="emailError" style="display: none;">Invalid email
+            format.</p>
+        </div>
+      </div>
+
+
+
+      <div class="mb-6">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="linkedin">LinkedIn
+          Profile URL</label>
+        <div class="relative">
+          <!-- LinkedIn Icon -->
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.667c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm12.5 11.667h-3v-5.268c0-1.253-.025-2.866-1.75-2.866-1.75 0-2.016 1.366-2.016 2.777v5.357h-3v-10h2.875v1.367h.042c.4-.758 1.375-1.557 2.834-1.557 3.033 0 3.591 1.994 3.591 4.586v5.604z" />
+            </svg>
+          </div>
+          <!-- Input Field -->
+          <input
+          data-th-field="*{linkedin}"
+            class="block w-full pl-10 p-2.5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            id="linkedin" type="text" placeholder="Enter your LinkedIn URL">
+
+        </div>
+      </div>
+
+<!-- github links  -->
+
+      <div class="grid gap-10 mb-6 max-w-screen-md">
+        <div>
+          <label for="github" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">GitHub
+            Username</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <!-- GitHub Icon -->
+              <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.091.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.109-1.462-1.109-1.462-.908-.62.069-.607.069-.607 1.004.07 1.533 1.032 1.533 1.032.892 1.528 2.341 1.087 2.912.831.091-.647.35-1.087.635-1.337-2.22-.252-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.683-.104-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.025a9.564 9.564 0 012.5-.336c.847.004 1.702.115 2.5.336 1.91-1.294 2.75-1.025 2.75-1.025.545 1.376.202 2.393.1 2.646.641.7 1.03 1.592 1.03 2.683 0 3.842-2.338 4.687-4.566 4.936.359.31.678.92.678 1.852 0 1.337-.012 2.417-.012 2.747 0 .268.18.577.688.479C19.138 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+              </svg>
+            </div>
+            <input type="text" id="github"
+            data-th-field="*{github}"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter your GitHub username" />
+          </div>
+        </div>
+      </div>
+
+
+      <div class="grid gap-10 mb-6 max-w-screen-md">
+        <label for="about" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About</label>
+        <textarea name="about" id="about" cols="10" rows="3"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          oninput="validateAbout()"></textarea>
+        <p class="text-red-500 text-sm font-semibold" id="aboutError" style="display: none;">This field is required.
+        </p>
+      </div>
+
+      <div class="mb-6">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="small_size"> Profile
+          Photo</label>
+
+
+        <input data-th-field="*{profilePhoto}"
+          class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+          id="small_size" type="file">
+      </div>
+
+
+      <div class="flex items-start mb-6">
+        <div class="flex items-center h-5">
+          <input id="remember" type="checkbox" value=""
+            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+            required />
+        </div>
+
+        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a
+            href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
+      </div>
+
+      <button type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add
+        Contact</button>
+    </form>
+
+  </section>
   <!-- This is where your scripts will be executed -->
+
   <script>
-    console.log("thiss")
+
+    // Validate name field
+    function validateName(fieldId) {
+      const name = document.getElementById(fieldId).value.trim();
+      const nameError = document.getElementById(fieldId + 'Error');
+      const pattern = /^[a-zA-Z\s]{4,}$/;
+      if (!pattern.test(name)) {
+        nameError.style.display = 'block';
+        return false;
+      } else {
+        nameError.style.display = 'none';
+        return true;
+      }
+    }
+
+    // Validate contact number
+    function validateContact(contact) {
+      const input = document.getElementById(contact).value.trim();
+      const contactError = document.getElementById(contact + 'Error');
+      const pattern = /^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$/;
+      if (!pattern.test(input)) {
+        contactError.style.display = 'block';
+        return false;
+      } else {
+        contactError.style.display = 'none';
+        return true;
+      }
+    }
+
+    // Validate email field
+    function validateEmail() {
+      const email = document.getElementById('email').value.trim();
+      const emailError = document.getElementById('emailError');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        emailError.style.display = 'block';
+        return false;
+      } else {
+        emailError.style.display = 'none';
+        return true;
+      }
+    }
+
+    // Validate "About" field
+    function validateAbout() {
+      const about = document.getElementById('about').value.trim();
+      const aboutError = document.getElementById('aboutError');
+      if (about === '') {
+        aboutError.style.display = 'block';
+        return false;
+      } else {
+        aboutError.style.display = 'none';
+        return true;
+      }
+    }
+
+    // Validate profile photo (optional)
+    function validateProfilePhoto() {
+      const profilePhoto = document.getElementById('small_size').files.length;
+      if (profilePhoto === 0) {
+        alert('Please upload a profile photo.');
+        return false;
+      }
+      return true;
+    }
+
+    // Validate form
+    function validateForm(event) {
+      const isNameValid = validateName('name');
+      const isContactValid = validateContact('primaryContact');
+      const isEmailValid = validateEmail();
+      const isAboutValid = validateAbout();
+
+      // Optionally validate profile photo
+      // const isProfilePhotoValid = validateProfilePhoto();
+
+      if (!isNameValid || !isContactValid || !isEmailValid || !isAboutValid) {
+        event.preventDefault(); // Prevent form submission if validation fails
+      }
+    }
+
   </script>
 </body>
 

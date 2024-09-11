@@ -21,17 +21,11 @@ public class ContactServiceImpl implements ContactService {
        repository.save(contact);
     }
 
-    @Override
-    public void deleteContact(long contactId) {
-       
-        repository.deleteById(contactId);
-       
-    }
 
     @Override
-    public List<Contact> displayAllContact(Long userId) {
+    public List<Contact> displayAllContact() {
+        return repository.findAll();
         
-        return null;
        
     }
 
@@ -47,5 +41,14 @@ public class ContactServiceImpl implements ContactService {
         return repository.findById(contactId);
        
     }
+
+
+    @Override
+    public void deleteContact(Contact contact) {
+        // TODO Auto-generated method stub
+        repository.delete(contact);
+    }
+
+   
     
 }

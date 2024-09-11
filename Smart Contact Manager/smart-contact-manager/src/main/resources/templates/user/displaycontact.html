@@ -6,9 +6,138 @@
     <title>Display Contact</title>
 </head>
 <body>
-    <section id="content">
+    <section id="content" class="mt-20">
 
-        <p>Email: email@example.com</p>
+     
+        
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+       
+        <label for="table-search" class="sr-only">Search</label>
+       
+    </div>
+
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="p-4 px-6 py-3">
+                    Id
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Email
+                </th>
+                
+                <th scope="col" class="px-6 py-3">
+                    Primary Contact
+                </th>
+                <th scope="col" class="px-6 py-3">
+                   links
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${contacts}" th:object="${c}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="w-4 p-4">
+                   <p  class="font-semibold" data-th-text="${c.contactId}"></p>
+                </td>
+                <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                    <img class="w-10 h-10 rounded-full" data-th-src="${c.profilePhoto}" alt="profile photo">
+                    <div class="ps-3">
+                        <div class="text-base font-semibold" data-th-text="${c.name}">Neil Sims</div>
+                        <div class="font-normal text-gray-500" data-th-text="${c.about}">neil.sims@flowbite.com</div>
+                    </div>  
+                </th>
+                <td class="px-6 py-4" data-th-text="${c.email}">
+                </td>
+               
+                <td class="px-6 py-4" data-th-text="${c.primaryContact}">
+                   
+                </td>
+                <td class="px-6 py-4">
+                    <th:block data-th-if="${c.linkden}"></th:block>
+                    <svg  class="w-5 h-5 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.667c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm12.5 11.667h-3v-5.268c0-1.253-.025-2.866-1.75-2.866-1.75 0-2.016 1.366-2.016 2.777v5.357h-3v-10h2.875v1.367h.042c.4-.758 1.375-1.557 2.834-1.557 3.033 0 3.591 1.994 3.591 4.586v5.604z"/>
+                    </svg>
+
+                    <th:block data-th-if="${c.github}">
+                        <svg  class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"></path>
+                          </svg>
+                    </th:block>
+                </td>
+                s
+                <td class="px-6 py-4">
+                    <!-- Modal toggle -->
+                    <a href="#" type="button" data-modal-target="editUserModal" data-modal-show="editUserModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit Contact</a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <!-- Edit user modal -->
+    <div id="editUserModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full">
+
+
+
+            <!-- Modal content -->
+            <form   class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Edit Contact
+                    </h3>
+                   <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="editUserModal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-6 gap-6">
+                        
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                            <input type="text" name="name" id="name"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            <input type="email" name="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@company.com" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="phone-number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                            <input type="number" name="phone-number" id="phone-number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="about" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About</label>
+                            <input type="text" name="about" id="about" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
+                        </div>
+                        
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="linkden" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">linkden</label>
+                            <input type="url" name="linkden" id="linkden" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="github" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">github</label>
+                            <input type="url" name="github" id="github" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save all</button>
+                    <button type="reset" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
        
     </section>
     <script>

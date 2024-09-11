@@ -24,7 +24,8 @@ public interface UserService {
 
     // Display All User
     List<User> getAllUsers();
-
+   
+    
     // Update User
     Optional<User> updateUser(User user);
 

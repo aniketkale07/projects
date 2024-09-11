@@ -4,18 +4,37 @@
 
 <head>
     <title>User Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-    <form id="content" method="post" data-th-action="@{'/deleteContact'}" class="mt-20 pt-6  flex justify-center "  >
-<div class=" max-w-sm max-h-screen border border-black grid grid-flow-row p-5 mb-4">
+<body >
+    <section id="content" class="flex items-center justify-center min-h-screen">
+    <form  method="get" data-th-action="@{'/user/deletecontactDB'}" 
+    class=" bg-gray-100  shadow-md rounded-lg p-8 mt-20 w-full max-w-md">
+        
+        <div data-th-if="${session.message}" data-th-replace="~{message :: message}"> </div>
+        
+        <!-- Header -->
+        <div class="mb-6 text-center">
+            <h2 class="text-2xl font-bold text-gray-800">Delete Contact</h2>
+        </div>
 
-    <label for="contact-id" class="mb-3">Contact ID: </label>
-    <input type="text" name="contact-id" class="mb-3" id="">
-    <button type="submit" class="border p-2 block font-semibold text-white bg-green-700  hover:bg-green-900">Delete Contact</button>
-</div>
+        <!-- Form fields -->
+        <div class="mb-6">
+            <label for="contactId" class="block text-gray-700 font-medium mb-2">Contact ID:</label>
+            <input type="text" name="contactId" id="contactId" 
+                   class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" 
+                   placeholder="Enter contact ID">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" 
+                    class="w-full bg-green-700 text-white font-semibold py-2 rounded-lg hover:bg-green-900 transition duration-300">
+                Delete Contact
+            </button>
+        </div>
     </form>
-    <script>
-       
-    </script>
+</section>
 </body>
 </html>

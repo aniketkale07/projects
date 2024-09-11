@@ -17,7 +17,7 @@
           <h1 class="text-xl text-center underline font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Sign In To Your Account
           </h1>
-          <form method="get" class="space-y-4 md:space-y-6" data-th-action="@{checklogin}" data-th-object="${loginForm}">
+          <form  method="get" class="space-y-4 md:space-y-6" data-th-action="@{checklogin}" data-th-object="${loginForm}">
             <!------------------- message box-------------------- -->
             <div th:if="${param.error}" class="underline text-md font-semibold">
               Invalid username and password.</div>
@@ -25,10 +25,19 @@
               You have been logged out.</div>
             <div data-th-if="session.message" data-th-replace="~{message :: message}"></div>
             
-            <div>
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-              <input  data-th-field="*{email}" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required>
-            </div>
+            <div class="mb-6">
+              <!-- Name Input Field with Icon -->
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="name">Username</label>
+              <div class="relative">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <!-- User Icon (Name) -->
+                      <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                          <path d="M12 12c2.209 0 4-1.791 4-4s-1.791-4-4-4-4 1.791-4 4 1.791 4 4 4zm0 2c-2.673 0-8 1.344-8 4v2h16v-2c0-2.656-5.327-4-8-4z"/>
+                      </svg>
+                  </div>
+                  <input data-th-field="*{email}" class="block w-full pl-10 p-2.5 text-xs text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 focus:outline-none" type="email" name="email" id="email" placeholder="Enter your email">
+              </div>
+          </div>
             <div>
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
               <input  data-th-field="*{password}" type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 tracking-wide" required>
