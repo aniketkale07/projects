@@ -163,8 +163,8 @@ public class Controller {
                             .type(MessageType.green)
                             .build();
 
+                            session.setAttribute("user", user);
                     session.setAttribute("message", message);
-                    session.setAttribute("user", user);
                     return new String("/user/dashboard");
                 } else {
                     // Password is incorrect, display an error message
