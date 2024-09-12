@@ -2,8 +2,6 @@ package scm.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import scm.entity.Contact;
 import scm.entity.User;
 import scm.exception.ResourceNotFoundException;
 import scm.repository.UserRepository;

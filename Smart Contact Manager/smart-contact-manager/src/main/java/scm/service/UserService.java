@@ -1,10 +1,8 @@
 package scm.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import scm.entity.Contact;
 import scm.entity.User;
 
 public interface UserService {

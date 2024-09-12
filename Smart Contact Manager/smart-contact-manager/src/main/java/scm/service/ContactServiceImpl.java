@@ -45,7 +45,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void deleteContact(Contact contact) {
-        // TODO Auto-generated method stub
+        
         repository.delete(contact);
     }
 

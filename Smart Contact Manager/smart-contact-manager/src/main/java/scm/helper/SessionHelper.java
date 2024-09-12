@@ -16,7 +16,7 @@ public class  SessionHelper {
        } catch (Exception e) {
         System.out.println("Error in SessionHelper: " + e);
         e.printStackTrace();
-        // TODO: handle exception
+        
        }
     }
 }

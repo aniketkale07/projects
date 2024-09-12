@@ -15,7 +15,7 @@ public class SecurityCustomUserDetailsService implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO Auto-generated method stub
+        
         scm.entity.User user =userRepository.findUserByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");

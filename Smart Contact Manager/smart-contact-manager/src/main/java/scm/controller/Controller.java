@@ -79,7 +79,7 @@ public class Controller {
     public String newUser(@ModelAttribute("userReg") UserRegistrationForm userReg,
             HttpSession session, Model model) {
 
-        // TODO: process POST request
+        //  process POST request
         // Processing Before Saving the user to database
         // Check the User is alredy availble in DB or not
         // if user is already availble in DB. then --> Invalid user
@@ -132,7 +132,7 @@ public class Controller {
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
+            
             logger.error("invalid email", e);
             e.printStackTrace();
             return "redirect:/signup";
