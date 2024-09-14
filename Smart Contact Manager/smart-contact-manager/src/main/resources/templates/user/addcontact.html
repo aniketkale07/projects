@@ -10,7 +10,11 @@
 <body>
   <section id="content" class="flex items-center justify-center min-h-screen">
 
-    <form th:action="@{/user/contact/addContactDB}" th:object="${addContactForm}" method="post" onsubmit="validateForm(event)" class="mt-20 pt-20 
+    <form th:action="@{/user/contact/addContactDB}"
+     th:object="${addContactForm}"
+      method="post" onsubmit="validateForm(event)" 
+      
+      class="mt-20 pt-20 
   flex-auto  max-w-lg md:max-w-2xl lg:max-w-3xl bg-white border rounded-lg shadow-md p-4 sm:p-6 md:p-8 lg:p-10">
 
       <div class=" mt-2  flex justify-center mb-6 ">

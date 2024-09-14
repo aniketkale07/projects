@@ -77,7 +77,6 @@ public class ContactController {
     @GetMapping("/addcontact")
     public String addContact(Model model) {
         AddContactForm addContactForm = new AddContactForm();
-        
 
         model.addAttribute("addContactForm", addContactForm);
         return "user/addcontact";
@@ -87,53 +86,40 @@ public class ContactController {
     public String addContactToDataBase(@Valid @ModelAttribute("addContactForm") AddContactForm addContactForm,
             BindingResult result, Authentication authentication, HttpSession session) {
 
-
-                logger.info("file information : {}", addContactForm.getContactImage().getOriginalFilename());
-
-                String imgUrl = ImageService.uploadImage(addContactForm.getContactImage());
-
         if (result.hasErrors()) {
+
+            result.getAllErrors().forEach(error -> logger.info(error.toString()));
+            Message message = Message.builder()
+                    .content("Check the fields of the form..")
+                    .type(MessageType.red)
+                    .build();
+            session.setAttribute("message", message);
             return "user/addcontact"; // If errors, go back to the form
         }
+
+
+
+        // String imgUrl = ImageService.uploadImage(addContactForm.getContactImage());
+
         Contact contact = new Contact();
 
         try {
             // Get authenticated user's email
             String email = Helper.getLoggedUserEmail(authentication);
 
-            if (email == null) {
-                // Handle the case where authentication.getName() returns null
-                // For example, redirect to login page or return an error message
-                return "redirect:/login";
-            }
-
             User user = userService.findUserByEmail(email);
 
-            if (user == null) {
-                // Handle the case where user is not found
-                // For example, return an error message
-                Message message = Message.builder()
-                        .content("User not found" + email)
-                        .type(MessageType.red)
-                        .build();
-                session.setAttribute("message", message);
-                return "user/addcontact";
-            }
-
-            
-            
             contact.setName(addContactForm.getName());
             contact.setAbout(addContactForm.getAbout());
             contact.setEmail(addContactForm.getEmail());
             contact.setGithub(addContactForm.getGithub());
             contact.setLinkedin(addContactForm.getLinkedin());
             contact.setPrimaryContact(addContactForm.getPrimaryContact());
-            contact.setContactImage(addContactForm.getContactImage());
+           
             contact.setUser(user);
             // Log the contact save action
 
             // contactService.saveContact(contact);
-
 
             logger.info("Contact saved for user: {}", user.getEmail());
             Message message = Message.builder()
