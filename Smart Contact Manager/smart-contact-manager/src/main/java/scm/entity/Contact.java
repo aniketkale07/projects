@@ -1,5 +1,5 @@
-package scm.entity;
 
+package scm.entity;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,9 +39,10 @@ public class Contact {
 private String email;
 @Column(length=1000)
     private String about;
-    private MultipartFile contactImage;
+    private String contactImage;
     private String github;
     private String linkedin;
+    private String cloudinaryImagePublicId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
