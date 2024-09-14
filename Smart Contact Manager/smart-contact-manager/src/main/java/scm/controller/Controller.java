@@ -117,7 +117,7 @@ public class Controller {
                 user.setPassword(userReg.getPassword());
                 user.setContact1(userReg.getContact1());
                 user.setContact2(userReg.getContact2());
-                user.setProfilePhoto(userReg.getProfilePhoto());
+                // user.setprofilePhoto(userReg.getProfilePhoto());
                 user.setRoleList(List.of("ROLE_USER"));
                 userService.saveUser(user);
 

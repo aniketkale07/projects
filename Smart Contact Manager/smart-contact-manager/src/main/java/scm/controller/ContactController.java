@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import scm.entity.Contact;
 import scm.entity.User;
+import scm.form.AddContactForm;
+import scm.form.ContactForm;
 import scm.helper.Helper;
 import scm.helper.Message;
 import scm.helper.MessageType;
 import scm.service.ContactService;
+import scm.service.ImageService;
 import scm.service.UserService;
 
 @Controller
@@ -35,7 +40,7 @@ public class ContactController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
 
-    @GetMapping("user/deletecontact")
+    @GetMapping("/deletecontact")
     public String deleteContact(Model model) {
         return "user/deletecontact";
     }
@@ -82,6 +87,11 @@ public class ContactController {
     public String addContactToDataBase(@Valid @ModelAttribute("addContactForm") AddContactForm addContactForm,
             BindingResult result, Authentication authentication, HttpSession session) {
 
+
+                logger.info("file information : {}", addContactForm.getContactImage().getOriginalFilename());
+
+                String imgUrl = ImageService.uploadImage(addContactForm.getContactImage());
+
         if (result.hasErrors()) {
             return "user/addcontact"; // If errors, go back to the form
         }
@@ -110,15 +120,21 @@ public class ContactController {
                 return "user/addcontact";
             }
 
+            
+            
             contact.setName(addContactForm.getName());
             contact.setAbout(addContactForm.getAbout());
             contact.setEmail(addContactForm.getEmail());
             contact.setGithub(addContactForm.getGithub());
             contact.setLinkedin(addContactForm.getLinkedin());
             contact.setPrimaryContact(addContactForm.getPrimaryContact());
-            contact.setProfilePhoto(addContactForm.getProfilePhoto());
+            contact.setContactImage(addContactForm.getContactImage());
             contact.setUser(user);
             // Log the contact save action
+
+            // contactService.saveContact(contact);
+
+
             logger.info("Contact saved for user: {}", user.getEmail());
             Message message = Message.builder()
                     .content("Contact added successfully")

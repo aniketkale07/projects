@@ -1,5 +1,7 @@
 package scm.form;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -45,5 +47,5 @@ public class UserRegistrationForm {
 
     private String contact2;
 
-    private String profilePhoto;
+    private MultipartFile profilePhoto;
 }

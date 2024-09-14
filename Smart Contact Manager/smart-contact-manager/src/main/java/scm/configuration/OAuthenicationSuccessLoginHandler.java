@@ -15,6 +15,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nimbusds.oauth2.sdk.auth.JWTAuthentication;
 
@@ -102,7 +103,7 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
             user.setLastName(
                     oAuth2User.getAttribute("family_name") != null ? oAuth2User.getAttribute("family_name") : "");
             user.setProfilePhoto(
-                    oAuth2User.getAttribute("picture") != null ? oAuth2User.getAttribute("picture") : "");
+                    oAuth2User.getAttribute("picture") != null ? oAuth2User.getAttribute("picture") : null);
             user.setEmail(email);
             user.setProviderUserId(
                     oAuth2User.getAttribute("sub") != null ? oAuth2User.getAttribute("sub") : "");
@@ -139,7 +140,7 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
                 user.setProviderUserId(providerId);
 
                 // Set Profile pic
-                String avatarUrl = oAuth2User.getAttribute("avatar_url");
+                MultipartFile avatarUrl = oAuth2User.getAttribute("avatar_url");
                 if (avatarUrl != null) {
                     user.setProfilePhoto(avatarUrl);
                 }

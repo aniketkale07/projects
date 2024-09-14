@@ -1,6 +1,8 @@
 package scm.entity;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,9 +39,9 @@ public class Contact {
 private String email;
 @Column(length=1000)
     private String about;
-    private String profilePhoto;
+    private MultipartFile contactImage;
     private String github;
-    private String linkden;
+    private String linkedin;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

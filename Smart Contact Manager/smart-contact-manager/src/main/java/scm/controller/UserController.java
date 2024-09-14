@@ -40,61 +40,9 @@ public class UserController {
     }
 
     // Delete Contact
-    @GetMapping("user/deletecontact")
-    public String deleteContact(Model model) {
-        return "user/deletecontact";
-    }
+   
 
-    @GetMapping("user/deletecontactDB")
-    public String deleteContactDB(@RequestParam(value = "contactId", required = false) Long contactId,
-            HttpSession session) {
-
-        Contact contactDB = contactService.getContact(contactId).get();
-        if (contactDB == null) {
-            // Handle the case where the contactId is null, for example, return an error
-            // page
-
-            Message message = Message.builder()
-                    .content("Contact not found")
-                    .type(MessageType.red)
-                    .build();
-            session.setAttribute("message", message);
-            return "user/deletecontact"; // Redirect to an appropriate error page or handle accordingly
-        }
-
-        // Proceed with deleting the contact since contactId is not null
-        contactService.deleteContact(contactDB);
-        Message message = Message.builder()
-                .content("Contact deleted Successfully")
-                .type(MessageType.green)
-                .build();
-        session.setAttribute("message", message);
-
-        return "user/deletecontact"; // Return the success page
-    }
-
-    // Add Contact
-    @GetMapping("user/addcontact")
-    public String addContact(Model model) {
-        model.addAttribute("addContact", new Contact());
-        return "user/addcontact";
-    }
-
-    // Display Contact
-    @GetMapping("user/displaycontact")
-    public String displayContact(Authentication authentication, Model model) {
-
-        String email = Helper.getLoggedUserEmail(authentication);
-
-        User user = userService.findUserByEmail(email);
-
-        List<Contact> contacts = user.getContact();
-
-        model.addAttribute("contacts", contacts);
-
-        return "user/displaycontact";
-    }
-
+   
     // User Profile
     @GetMapping("user/profile")
     public String userProfile() {
@@ -102,66 +50,9 @@ public class UserController {
     }
 
     // Contact Profile
-    @GetMapping("user/contactprofile")
-    public String contactProfile() {
-        return "user/contactprofile";
-    }
-
+   
     // Add Contact to DB
-    @PostMapping("/user/addContactDB")
-    public String addContactToDataBase(
-            @ModelAttribute("addContact") Contact addContact,
-            Authentication authentication,
-            HttpSession session) {
-
-        try {
-            // Get authenticated user's email
-            String email = Helper.getLoggedUserEmail(authentication);
-
-            if (email == null) {
-                // Handle the case where authentication.getName() returns null
-                // For example, redirect to login page or return an error message
-                return "redirect:/login";
-            }
-
-            User user = userService.findUserByEmail(email);
-
-            if (user == null) {
-                // Handle the case where user is not found
-                // For example, return an error message
-                Message message = Message.builder()
-                        .content("User not found" + email)
-                        .type(MessageType.red)
-                        .build();
-                session.setAttribute("message", message);
-                return "redirect:/user/addcontact";
-            }
-
-            // Create a new Contact and populate fields
-            addContact.setUser(user); // Associate the contact with the user
-
-            // Save the contact in the DB
-            contactService.saveContact(addContact);
-
-            // Log the contact save action
-            logger.info("Contact saved for user: {}", user.getEmail());
-            Message message = Message.builder()
-                    .content("Contact added successfully")
-                    .type(MessageType.green)
-                    .build();
-            session.setAttribute("message", message);
-
-        } catch (Exception e) {
-            logger.error("Error saving contact", e);
-            Message message = Message.builder()
-                    .content(e + "Error adding contact. Please try again.")
-                    .type(MessageType.red)
-                    .build();
-            session.setAttribute("message", message);
-        }
-
-        return "redirect:/user/addcontact";
-    }
+    
 
     // Forget Password Handler
     @GetMapping("user/forgetpassword")
@@ -201,9 +92,5 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @PostMapping("user/editContact")
-    public String editContact(){
-
-        return null;
-    }
+   
 }
