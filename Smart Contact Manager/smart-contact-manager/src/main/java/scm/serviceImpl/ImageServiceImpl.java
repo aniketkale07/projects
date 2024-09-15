@@ -21,20 +21,17 @@ public class ImageServiceImpl implements ImageService {
     public ImageServiceImpl(Cloudinary cloudinary) {
         this.cloudinary = cloudinary;
     }
-    String filename = UUID.randomUUID().toString();
+    // String filename = UUID.randomUUID().toString();
     @Override
-    public String uploadImage(MultipartFile contactImage) {
-        
-       
+    public String uploadImage(MultipartFile contactImage, String filename) {
         try {
+          
             byte[] data = new byte[contactImage.getInputStream().available()];
             contactImage.getInputStream().read(data);
             cloudinary.uploader().upload(data, ObjectUtils.asMap(
-                "public_id", filename
-            ));
+                "public_id", filename));
             return this.getUrlFromPublicId(filename);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -42,15 +39,8 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public String getUrlFromPublicId(String publicId) {
-        
         return cloudinary
         .url()
-        .transformation(
-            new Transformation<>()
-            .width("CONTACT_IMAGE_WIDTH")
-            .height("CONTACT_IMAGE_HEIGHT")
-            .crop("CONTACT_IMAGE_CROP")
-        )
         .generate(publicId);
         
     }

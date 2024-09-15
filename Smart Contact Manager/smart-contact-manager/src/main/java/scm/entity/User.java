@@ -53,8 +53,7 @@ public class User implements UserDetails {
 
 
     // @Getter(value = AccessLevel.NONE)
-    @Column(name="email")
-    @NotBlank
+    
     private String email;
 
 
@@ -69,7 +68,7 @@ public class User implements UserDetails {
     
     private String about;
 
-    private MultipartFile profilePhoto;
+    private String profilePhoto;
 
     @Builder.Default
     private boolean emailVerified=false;

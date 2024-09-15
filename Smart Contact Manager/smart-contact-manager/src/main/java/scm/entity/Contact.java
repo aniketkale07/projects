@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @Entity(name = "contact")
 @Table(name = "contact")
 @NoArgsConstructor
@@ -44,7 +45,7 @@ private String email;
     private String cloudinaryImagePublicId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
    
