@@ -2,10 +2,8 @@ package scm.form;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,5 +45,5 @@ public class UserRegistrationForm {
 
     private String contact2;
 
-    private MultipartFile profilePhoto;
+    private String profilePhoto;
 }

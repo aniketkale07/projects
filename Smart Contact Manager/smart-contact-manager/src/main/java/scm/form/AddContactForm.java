@@ -2,7 +2,6 @@ package scm.form;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

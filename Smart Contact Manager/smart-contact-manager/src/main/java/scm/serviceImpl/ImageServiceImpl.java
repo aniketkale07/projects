@@ -1,13 +1,10 @@
 package scm.serviceImpl;
 
 import java.io.IOException;
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 
 import scm.service.ImageService;

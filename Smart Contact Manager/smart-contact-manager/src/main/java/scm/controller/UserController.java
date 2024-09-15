@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 import scm.entity.User;
 import scm.form.ResetForm;
 import scm.helper.Helper;
-import scm.service.ContactService;
 import scm.service.UserService;
 
 @Controller
@@ -21,9 +20,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ContactService contactService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
