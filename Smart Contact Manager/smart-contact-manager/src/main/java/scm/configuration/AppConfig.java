@@ -1,8 +1,5 @@
 package scm.configuration;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,9 +24,9 @@ public class AppConfig {
         
         return new Cloudinary(
             ObjectUtils.asMap(
-                "cloud_name","cloudName",
-                "api_key","apiKey",
-                "api_secret","apiSecret"
+                "cloud_name",cloudName,
+                "api_key",apiKey,
+                "api_secret",apiSecret
             )
         );
     }

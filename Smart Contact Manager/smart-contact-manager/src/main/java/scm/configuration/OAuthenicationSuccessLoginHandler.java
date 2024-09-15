@@ -1,7 +1,6 @@
 package scm.configuration;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,19 +12,13 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.nimbusds.oauth2.sdk.auth.JWTAuthentication;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import scm.entity.Providers;
 import scm.entity.User;
 import scm.helper.AppConstants;
-import scm.service.SecurityCustomUserDetailsService;
 import scm.service.UserService;
 
 @Component
@@ -140,7 +133,7 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
                 user.setProviderUserId(providerId);
 
                 // Set Profile pic
-                MultipartFile avatarUrl = oAuth2User.getAttribute("avatar_url");
+                String avatarUrl = oAuth2User.getAttribute("avatar_url");
                 if (avatarUrl != null) {
                     user.setProfilePhoto(avatarUrl);
                 }

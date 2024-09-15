@@ -1,6 +1,7 @@
 package scm.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,6 @@ import jakarta.validation.Valid;
 import scm.entity.Contact;
 import scm.entity.User;
 import scm.form.AddContactForm;
-import scm.form.ContactForm;
 import scm.helper.Helper;
 import scm.helper.Message;
 import scm.helper.MessageType;
@@ -110,7 +110,8 @@ public class ContactController {
         //     return "user/addcontact"; // Return to the form with an error message
         // }
     
-        // String fileURl = imageService.uploadImage(addContactForm.getContactImage());
+        String filename=UUID.randomUUID().toString();
+        String fileURl = imageService.uploadImage(addContactForm.getContactImage(), filename);
     
         Contact contact = new Contact();
     
@@ -127,7 +128,7 @@ public class ContactController {
             contact.setLinkedin(addContactForm.getLinkedin());
             contact.setPrimaryContact(addContactForm.getPrimaryContact());
             
-            // contact.setContactImageUrl(fileURl);
+            contact.setContactImage(fileURl);
             contact.setUser(user);
             // Log the contact save action
     
@@ -135,7 +136,7 @@ public class ContactController {
     
             logger.info("Contact saved for user: {}", user.getEmail());
             Message message = Message.builder()
-                    .content("Contact added successfully")
+                    .content(contact.getContactImage())
                     .type(MessageType.green)
                     .build();
             session.setAttribute("message", message);
