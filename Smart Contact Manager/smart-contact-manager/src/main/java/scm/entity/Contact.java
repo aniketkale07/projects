@@ -1,14 +1,13 @@
 
 package scm.entity;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -48,6 +47,7 @@ private String email;
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+   
 
     
 }

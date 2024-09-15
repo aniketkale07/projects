@@ -38,6 +38,9 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
 
+    @Autowired
+    private ImageService imageService;
+
     private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
 
     @GetMapping("/deletecontact")
@@ -85,9 +88,8 @@ public class ContactController {
     @PostMapping("/addContactDB")
     public String addContactToDataBase(@Valid @ModelAttribute("addContactForm") AddContactForm addContactForm,
             BindingResult result, Authentication authentication, HttpSession session) {
-
+    
         if (result.hasErrors()) {
-
             result.getAllErrors().forEach(error -> logger.info(error.toString()));
             Message message = Message.builder()
                     .content("Check the fields of the form..")
@@ -96,38 +98,48 @@ public class ContactController {
             session.setAttribute("message", message);
             return "user/addcontact"; // If errors, go back to the form
         }
-
-
-
-        // String imgUrl = ImageService.uploadImage(addContactForm.getContactImage());
-
+    
+        // if image is empty 
+        // if (addContactForm.getContactImage() == null || addContactForm.getContactImage().isEmpty()) {
+        //     logger.info("Contact image is empty...");
+        //     Message message = Message.builder()
+        //             .content("Please select a contact image.")
+        //             .type(MessageType.red)
+        //             .build();
+        //     session.setAttribute("message", message);
+        //     return "user/addcontact"; // Return to the form with an error message
+        // }
+    
+        // String fileURl = imageService.uploadImage(addContactForm.getContactImage());
+    
         Contact contact = new Contact();
-
+    
         try {
             // Get authenticated user's email
             String email = Helper.getLoggedUserEmail(authentication);
-
+    
             User user = userService.findUserByEmail(email);
-
+    
             contact.setName(addContactForm.getName());
             contact.setAbout(addContactForm.getAbout());
             contact.setEmail(addContactForm.getEmail());
             contact.setGithub(addContactForm.getGithub());
             contact.setLinkedin(addContactForm.getLinkedin());
             contact.setPrimaryContact(addContactForm.getPrimaryContact());
-           
+            
+            // contact.setContactImageUrl(fileURl);
             contact.setUser(user);
             // Log the contact save action
-
-            // contactService.saveContact(contact);
-
+    
+            contactService.saveContact(contact);
+    
             logger.info("Contact saved for user: {}", user.getEmail());
             Message message = Message.builder()
                     .content("Contact added successfully")
                     .type(MessageType.green)
                     .build();
             session.setAttribute("message", message);
-
+    
         } catch (Exception e) {
             logger.error("Error saving contact", e);
             Message message = Message.builder()
@@ -138,7 +150,6 @@ public class ContactController {
         }
         return "user/addcontact";
     }
-
     // Display Contact
     @GetMapping("/displaycontact")
     public String displayContact(Authentication authentication, Model model) {

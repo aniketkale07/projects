@@ -1,5 +1,6 @@
 package scm.entity;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,9 +30,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Represents a user entity in the system.
- */
+
 @Entity(name="user")
 @Table(name="user")
 @Getter
@@ -39,11 +38,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User implements UserDetails{
-
-    /**
-     * Unique identifier for the user.
-     */
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;

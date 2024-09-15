@@ -2,11 +2,8 @@ package scm.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class ImageService {
+public interface ImageService {
 
-    public static String uploadImage(MultipartFile contactImage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'uploadImage'");
-    }
-    
+    String uploadImage(MultipartFile contactImage);
+    String getUrlFromPublicId(String publicId);
 }

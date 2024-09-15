@@ -2,7 +2,7 @@ package scm.form;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +27,9 @@ public class AddContactForm {
     private String email;
 
     private String about;
-    private String contactImage;
+
+    private MultipartFile contactImage;
+
     private String github;
     private String linkedin;
 
