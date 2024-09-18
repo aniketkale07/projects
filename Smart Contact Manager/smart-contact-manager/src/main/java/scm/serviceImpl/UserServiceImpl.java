@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
     @Lazy
     PasswordEncoder passwordEncoder;
 
+    @AutoWired
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -37,7 +39,10 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         logger.info(user.getProviders().toString());
-        return userRepository.save(user);
+        User savedUser= userRepository.save(user);
+
+        String emailToken = UUID.getRandomString.toString();
+
     }
 
     // find User by User ID

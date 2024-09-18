@@ -69,6 +69,8 @@ public class User implements UserDetails {
     @Builder.Default
     private boolean emailVerified=false;
 
+    private String emailToken;
+
     @Builder.Default
     @Getter(value = AccessLevel.NONE)
     private boolean isEnabled=false;
