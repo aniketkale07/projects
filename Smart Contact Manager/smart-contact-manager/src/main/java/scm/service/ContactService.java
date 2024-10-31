@@ -15,6 +15,6 @@ public interface ContactService {
     void saveContact(Contact contact);
 
     // // Get Single Contact
-    Optional<Contact> getContact(Long contactId);
+    Contact getContact(Long contactId);
     
 }

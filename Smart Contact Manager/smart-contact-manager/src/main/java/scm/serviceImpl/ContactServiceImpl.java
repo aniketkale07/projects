@@ -37,17 +37,20 @@ public class ContactServiceImpl implements ContactService {
       
     }
 
-    @Override
-    public Optional<Contact> getContact(Long contactId) {
-        return repository.findById(contactId);
-       
-    }
 
 
     @Override
     public void deleteContact(Contact contact) {
         
         repository.delete(contact);
+    }
+
+
+    @Override
+    public Contact getContact(Long contactId) {
+     
+       return repository.findById(contactId).get();
+
     }
 
    

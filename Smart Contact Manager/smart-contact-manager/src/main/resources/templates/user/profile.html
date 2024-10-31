@@ -8,13 +8,17 @@
 
 <body>
     <div id="content"
-        class="flex flex-col items-center p-6 mt-10 pt-16 w-full max-w-screen-lg bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <h1 class="font-semibold " >  PROFILE</h1>
-        <div class="flex justify-end w-full px-4">
+    class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 min-h-screen flex items-center justify-center p-6">
+    
+    <div
+        class="w-full max-w-screen-lg bg-white bg-opacity-90 border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 mt-10">
+        
+        <!-- Header with Dropdown -->
+        <div class="flex justify-between items-center px-6 py-4 border-b border-gray-300">
+            <h1 class="font-semibold text-2xl text-gray-900 dark:text-gray-100">PROFILE</h1>
             <button id="dropdownButton" data-dropdown-toggle="dropdown"
-                class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+                class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-1.5"
                 type="button">
-                <span class="sr-only">Open dropdown</span>
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                     viewBox="0 0 16 3">
                     <path
@@ -23,67 +27,59 @@
             </button>
             <!-- Dropdown menu -->
             <div id="dropdown"
-                class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44 dark:bg-gray-700">
                 <ul class="py-2" aria-labelledby="dropdownButton">
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export
-                            Data</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
-                    </li>
+                    <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a></li>
+                    <li><a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a></li>
                 </ul>
             </div>
         </div>
 
-        <div class="flex flex-col items-center pb-10">
-            <img class="w-36 h-36 mb-3 rounded-full shadow-lg border-r-black" th:src="${loggedUser.profilePhoto}"
-                alt="Profile Photo" />
-            <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-                <span th:text="${loggedUser.firstName + ' ' + loggedUser.lastName}">[User Name]</span>
-            </h5>
-            <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${loggedUser.about}">[About]</span>
+        <!-- Profile Section -->
+        <div class="flex flex-col items-center pt-8 pb-6">
+            <img class="w-32 h-32 mb-4 rounded-full shadow-lg border-4 border-gray-300 dark:border-gray-600 object-cover"
+                th:src="${loggedUser.profilePhoto}" alt="Profile Photo" />
+            <h5 class="text-xl font-medium text-gray-900 dark:text-white mb-2" th:text="${loggedUser.firstName + ' ' + loggedUser.lastName}">[User Name]</h5>
+            <span class="text-sm text-gray-500 dark:text-gray-400 mb-6" th:text="${loggedUser.about}">[About]</span>
         </div>
 
-        <div class="w-full px-4">
+        <!-- User Information Section -->
+        <div class="w-full px-8 pb-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                    <h6 class="text-sm font-medium text-gray-900 dark:text-white">User ID</h6>
+                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-sm">
+                    <h6 class="text-sm font-medium text-gray-900 dark:text-gray-100">User ID</h6>
                     <p class="text-lg text-gray-700 dark:text-gray-300" th:text="${loggedUser.userId}">[User ID]</p>
                 </div>
-                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                    <h6 class="text-sm font-medium text-gray-900 dark:text-white">Full Name</h6>
-                    <p class="text-lg text-gray-700 dark:text-gray-300"
-                        th:text="${loggedUser.firstName + ' ' + loggedUser.middleName + ' ' + loggedUser.lastName}">
-                        [Full Name]</p>
+                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-sm">
+                    <h6 class="text-sm font-medium text-gray-900 dark:text-gray-100">Full Name</h6>
+                    <p class="text-lg text-gray-700 dark:text-gray-300" th:text="${loggedUser.firstName + ' ' + loggedUser.middleName + ' ' + loggedUser.lastName}">[Full Name]</p>
                 </div>
-                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                    <h6 class="text-sm font-medium text-gray-900 dark:text-white">Email</h6>
+                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-sm">
+                    <h6 class="text-sm font-medium text-gray-900 dark:text-gray-100">Email</h6>
                     <p class="text-lg text-gray-700 dark:text-gray-300" th:text="${loggedUser.email}">[Email]</p>
                 </div>
-                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                    <h6 class="text-sm font-medium text-gray-900 dark:text-white">Contact 1</h6>
+                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-sm">
+                    <h6 class="text-sm font-medium text-gray-900 dark:text-gray-100">Contact 1</h6>
                     <p class="text-lg text-gray-700 dark:text-gray-300" th:text="${loggedUser.contact1}">[Contact 1]</p>
                 </div>
-                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                    <h6 class="text-sm font-medium text-gray-900 dark:text-white">Contact 2</h6>
+                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-sm">
+                    <h6 class="text-sm font-medium text-gray-900 dark:text-gray-100">Contact 2</h6>
                     <p class="text-lg text-gray-700 dark:text-gray-300" th:text="${loggedUser.contact2}">[Contact 2]</p>
                 </div>
             </div>
-<!-- FOr About -->
-           
         </div>
-        <div class=" flex ml-0  mt-5 ">
-            <h3 class=" font-bold p-4">About : </h3>
-            <p class="text-lg p-4" data-th-text="${loggedUser.about}"></p>
+
+        <!-- About Section -->
+        <div class="w-full px-8 py-4">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">About:</h3>
+            <p class="text-base text-gray-700 dark:text-gray-300" th:text="${loggedUser.about}">[Detailed About Info]</p>
         </div>
     </div>
+
+</div>
+
+
 
     <script>
         console.log(localStorage.getItem('log'));

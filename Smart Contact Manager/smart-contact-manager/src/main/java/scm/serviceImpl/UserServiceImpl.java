@@ -2,6 +2,8 @@ package scm.serviceImpl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import scm.entity.User;
 import scm.exception.ResourceNotFoundException;
+import scm.helper.Helper;
 import scm.repository.UserRepository;
+import scm.service.EmailService;
 import scm.service.UserService;
 
 @Service
@@ -23,6 +27,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     @Lazy
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmailService emailService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -37,7 +44,12 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         logger.info(user.getProviders().toString());
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        // create a email token 
+        String emailToken = UUID.randomUUID().toString();
+        emailService.sendEmail(savedUser.getEmail(), "Verify your email", "To Verify our email please click on the link and fooliw the instructions \n" + Helper.getEmailVerificationLink(emailToken));
+    
+        return savedUser;
     }
 
     // find User by User ID

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,7 +53,7 @@ public class ContactController {
     public String deleteContactDB(@RequestParam(value = "contactId", required = false) Long contactId,
             HttpSession session) {
 
-        Contact contactDB = contactService.getContact(contactId).get();
+        Contact contactDB = contactService.getContact(contactId);
         if (contactDB == null) {
             // Handle the case where the contactId is null, for example, return an error
             // page
@@ -166,10 +167,27 @@ public class ContactController {
         return "user/displaycontact";
     }
 
-    @GetMapping("/contactprofile")
-    public String contactProfile() {
-        return "user/contactprofile";
+    @GetMapping("/contactprofile/{contactId}")
+    public String contactProfile(@PathVariable Long contactId, HttpSession session , Model model) {
+        System.out.println("contactProfilee");
+      
+      Contact contact = contactService.getContact(contactId);
+
+      if(contact== null){
+        Message message = Message.builder()
+                            .content("Please select correct contact")
+                            .type(MessageType.red)
+                            .build();
+        session.setAttribute("message", message);
+        return "user/displaycontact";
+      }
+     
+     
+      model.addAttribute("contact", contact);
+      return "user/contactprofile";
     }
+
+
 
     @PostMapping("/editContact")
     public String editContact() {

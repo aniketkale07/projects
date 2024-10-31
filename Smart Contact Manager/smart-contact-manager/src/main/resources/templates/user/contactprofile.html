@@ -1,18 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{user-base-template::parent(~{::#content},~{::title},~{::script})}"
-  xmlns:th="http://www.thymeleaf.org">
+    xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Contact Profile</title>
+  
 </head>
-<body>
-    <section id="content">
 
-        <p>Email: email@example.com</p>
-       
-    </section>
+<body>
+
+    <div id="content" class=" bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 min-h-screen flex items-center justify-center  mt-10 p-6">
+
+        <div class="w-full max-w-lg bg-white bg-opacity-90 border border-gray-200 rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 mt-10">
+            <!-- <h1 class="font-bold text-3xl text-center text-gray-900 dark:text-gray-100 border-b border-gray-300 py-6">
+                Contact Profile</h1>
+     -->
+            <div class="flex flex-col items-center pt-6 pb-8">
+                <!-- Profile Picture -->
+                <img class="w-36 h-36 mb-4 rounded-full object-cover shadow-md border-4 border-gray-300 dark:border-gray-600"
+                    th:src="${contact.contactImage}" alt="Profile Photo" />
+    
+                <!-- Name -->
+                <h5 class="text-2xl font-semibold text-gray-900 dark:text-white" th:text="${contact.name}">[User Name]</h5>
+                
+                <!-- About -->
+                <span class="text-sm text-gray-600 dark:text-gray-400 mt-2 mb-4" th:text="${contact.about}">[About]</span>
+            </div>
+    
+            <!-- Contact Details -->
+            <div class="px-6 py-4 text-left text-gray-700 dark:text-gray-300">
+                <!-- Name -->
+                <p class="text-lg font-medium mb-3">
+                    <span class="font-semibold text-gray-800 dark:text-gray-100">Name:</span>
+                    <span class="ml-2" th:text="${contact.name}">[User Name]</span>
+                </p>
+    
+                <!-- Primary Contact -->
+                <p class="text-lg font-medium mb-3">
+                    <span class="font-semibold text-gray-800 dark:text-gray-100">Contact Number:</span>
+                    <span class="ml-2" th:text="${contact.primaryContact}">[Contact Number]</span>
+                </p>
+    
+                <!-- LinkedIn Profile -->
+                <p class="text-lg font-medium mb-3">
+                    <span class="font-semibold text-gray-800 dark:text-gray-100">LinkedIn Profile:</span>
+                    <span class="ml-2" th:text="${contact.linkedin}">[LinkedIn URL]</span>
+                </p>
+    
+                <!-- GitHub Profile -->
+                <p class="text-lg font-medium mb-3">
+                    <span class="font-semibold text-gray-800 dark:text-gray-100">GitHub Profile:</span>
+                    <span class="ml-2" th:text="${contact.github}">[GitHub URL]</span>
+                </p>
+    
+                <!-- Additional About Section -->
+                <p class="text-lg font-medium mb-3">
+                    <span class="font-semibold text-gray-800 dark:text-gray-100">About:</span>
+                    <span class="ml-2" th:text="${contact.about}">[Additional About Information]</span>
+                </p>
+            </div>
+        </div>
+    
+    </div>
+    
     <script>
-       
+        // Add any necessary JavaScript here
     </script>
 </body>
+
 </html>

@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Entity(name = "contact")
 @Table(name = "contact")
 @NoArgsConstructor
@@ -45,8 +44,11 @@ private String email;
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private User user;
 
+    // @JsonIgnore for it will goes Recursivve
+    //  IT will break the recursive call of user and contact
    
 
     
