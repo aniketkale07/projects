@@ -165,8 +165,8 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
                 String email = userDetails.getUsername();
                 User user2 = userService.findUserByEmail(email);
             }
+            
         }
-       
 
         // Redirect to the user's profile page after successful authentication
         new DefaultRedirectStrategy().sendRedirect(request, response, "/user/dashboard");
