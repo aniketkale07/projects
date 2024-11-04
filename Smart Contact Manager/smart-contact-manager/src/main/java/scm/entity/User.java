@@ -126,7 +126,7 @@ private List<String> roleList=new ArrayList<>();
 
     @Override
     public boolean isEnabled(){
-        return this.isEnabled; 
+        return true; 
     }
 
     @Override

@@ -70,6 +70,11 @@ public class SecurityConfig {
             logoutForm.logoutSuccessUrl("/login?logout=true");
         });
 
+        HttpSecurity.sessionManagement(session -> {
+            session.maximumSessions(1)
+                   .expiredUrl("/login?sessionExpired=true");
+        });
+
         return HttpSecurity.build();
     }
 

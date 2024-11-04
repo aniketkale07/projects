@@ -160,12 +160,12 @@ public class OAuthenicationSuccessLoginHandler implements AuthenticationSuccessH
 
         } else{
             // for non OA2uthUser 
-            UserDetails userDetails = (UserDetails)authentication.getPrincipal();            
-            String email =userDetails.getUsername();
-
-            User user2 = userService.findUserByEmail(email);
+            if (authentication != null && authentication.isAuthenticated()) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                String email = userDetails.getUsername();
+                User user2 = userService.findUserByEmail(email);
+            }
         }
-
        
 
         // Redirect to the user's profile page after successful authentication
